@@ -1,148 +1,119 @@
-import express from 'express';
-import {storageArray} from './storage';
-import {isIndexInArray,checkCorrectType} from './logics';
-import jwt from 'jsonwebtoken';
+import express from "express";
+import { storageArray } from "./storage";
+import { isIndexInArray, checkCorrectType } from "./logics";
+import jwt from "jsonwebtoken";
+import { authenticateToken, isAdmin, secret } from "./auth";
 
 const app = express();
 
-const arrayRouter = express.Router();
-app.use('/array',arrayRouter);
-
-
 //parses body of the request
-app.use(express.json())
+app.use(express.json());
 
+app.post("/login", (req, res) => {
+  const userName = req.body.userName;
+  const user = { name: userName };
+  const accessToken = jwt.sign(user, secret);
 
+  res.json({
+    userName: userName,
+    accessToken: accessToken,
+  });
+});
 
+app.use("/", authenticateToken);
 
+const arrayRouter = express.Router();
+app.use("/array", arrayRouter);
 
-app.get('/api',(req,res)=>{
+//regular routing
+app.get("/", (req, res) => {
+  const date = new Date().toJSON().slice(0, 10);
+  const username = res.locals.user;
+
+  res.json({
+    msg: `Hello ${username} today is ${date}`,
+  });
+});
+
+app.get("/echo", (req, res) => {
+  const msg = req.query.msg;
+  res.json({
+    echo: "the message is: " + msg,
+  });
+});
+
+//array routing
+arrayRouter.get("/", (req, res) => {
+  res.json({
+    array: storageArray,
+  });
+});
+
+arrayRouter.get("/:index", (req, res) => {
+  const arrayIndex = isIndexInArray(req.params.index, storageArray);
+  if (arrayIndex !== -1) {
+    const itemInIndex = storageArray[arrayIndex];
     res.json({
-        text: "just my api"
-    })
-})
+      itemInIndex: itemInIndex,
+    });
+  } else {
+    res.status(400).json({
+      index: "invalid index",
+    });
+  }
+});
 
-//authing user
-app.post('/api/login',(req,res)=>{
-    const user = {id:3}
-    const token = jwt.sign({user},'secret_key')
+arrayRouter.post("/", isAdmin, (req, res) => {
+  const value = req.body.value;
+
+  if (checkCorrectType(value)) {
+    storageArray.push(value);
     res.json({
-        token: token
-    })
-})
+      array: storageArray,
+    });
+  } else {
+    res.status(400).json({
+      value: "invalid value entered",
+    });
+  }
+});
 
-app.get('/api/protected',(req,res)=>{
+arrayRouter.put("/:index", isAdmin, (req, res) => {
+  const value = req.body.value;
+  const arrayIndex = isIndexInArray(req.params.index, storageArray);
+  if (arrayIndex !== -1 && checkCorrectType(value)) {
+    storageArray[arrayIndex] = value;
     res.json({
-        text: "this is protected"
-    })
-})
+      array: storageArray,
+    });
+  } else {
+    res.status(404).json({
+      index: "invalid index",
+    });
+  }
+});
 
-// function ensureToken(req, res,next) {
-//     const bearerHeader = req.headers["authorization"]
-//     if(typeof bearerHeader !== undefined){
-//         const bearer = bearerHeader.split(" ")
-//         const bearerToken = bearer[1]
-//         req.token = bearerToken
-//     }
-//     else{
-//         res.sendStatus(403)
-//     }
+arrayRouter.delete("/", isAdmin, (req, res) => {
+  storageArray.pop();
+  res.json({
+    array: storageArray,
+  });
+});
 
+arrayRouter.delete("/:index", isAdmin, (req, res) => {
+  const arrayIndex = isIndexInArray(req.params.index, storageArray);
+  if (arrayIndex !== -1) {
+    storageArray.splice(arrayIndex, 1);
+    res.json({
+      array: storageArray,
+    });
+  } else {
+    res.status(400).json({
+      index: "invalid index",
+    });
+  }
+});
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-// arrayRouter.get('/',(req,res)=>{
-    
-//     res.json({  
-//         array : storageArray
-//     })
-// })
-
-
-
-// arrayRouter.get('/:index',(req,res)=>{
-//     const arrayIndex = isIndexInArray(req.params.index,storageArray);
-//     if(arrayIndex !== -1){
-//         const itemInIndex = storageArray[arrayIndex]
-//         res.json({
-//             itemInIndex: itemInIndex
-//         })
-
-//     }
-//     else{
-//         res.status(400).json({
-//             index: "invalid index"
-//         })
-//     }
-    
-// })
-
-// arrayRouter.post('/',(req,res)=>{
-//     const value = req.body.value;
-//     if(checkCorrectType(value)){
-//     storageArray.push(value)
-//     res.json({
-//         array: storageArray
-//     })
-//     }
-//     else{
-//         res.status(400).json({
-//             value: "invalid value entered"
-//         })  
-//     }
-// })
-
-// arrayRouter.put('/:index',(req,res)=>{
-//     const value = req.body.value;
-//     const arrayIndex = isIndexInArray(req.params.index,storageArray);
-//     if(arrayIndex !== -1 && checkCorrectType(value)){
-//         storageArray[arrayIndex] = value;
-//         res.json({
-//             array: storageArray
-//         })
-//     }
-//     else{
-//         res.status(404).json({
-//             index: "invalid index"
-//         })
-//     }
-// })
-
-
-// arrayRouter.delete('/',(req,res)=>{
-//     storageArray.pop()
-//     res.json({
-//         array: storageArray
-//     })
-// })
-
-// arrayRouter.delete('/:index',(req,res)=>{
-//     const arrayIndex = isIndexInArray(req.params.index,storageArray)
-//     if(arrayIndex !== -1){
-//         storageArray.splice(arrayIndex,1);
-//         res.json({
-//             array: storageArray
-//         })
-//     }
-//     else{
-//         res.status(400).json({
-//             index: "invalid index"
-//         })
-//     }
-// })
-
-
-app.listen(3000,()=>{
-    console.log('listening at port 3000')
-})
+app.listen(3000, () => {
+  console.log("listening at port 3000");
+});
