@@ -1,11 +1,11 @@
 import jwt from "jsonwebtoken";
 
 //secret key for jwt
-export const secret = "secretKey";
+export const secret: string = "secretKey";
 
 //authorization function
 export function isAdmin(req, res, next) {
-  const name = res.locals.user;
+  const name: string = res.locals.user;
 
   if (name.startsWith("admin")) {
     next();

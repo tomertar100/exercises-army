@@ -6,12 +6,14 @@ import { authenticateToken, isAdmin, secret } from "./auth";
 
 const app = express();
 
+type User = { name: string };
+
 //parses body of the request
 app.use(express.json());
 
 app.post("/login", (req, res) => {
-  const userName = req.body.userName;
-  const user = { name: userName };
+  const userName: string = req.body.userName;
+  const user: User = { name: userName };
   const accessToken = jwt.sign(user, secret);
 
   res.json({
@@ -50,7 +52,7 @@ arrayRouter.get("/", (req, res) => {
 });
 
 arrayRouter.get("/:index", (req, res) => {
-  const arrayIndex = isIndexInArray(req.params.index, storageArray);
+  const arrayIndex = isIndexInArray(Number(req.params.index), storageArray);
   if (arrayIndex !== -1) {
     const itemInIndex = storageArray[arrayIndex];
     res.json({
@@ -64,7 +66,7 @@ arrayRouter.get("/:index", (req, res) => {
 });
 
 arrayRouter.post("/", isAdmin, (req, res) => {
-  const value = req.body.value;
+  const value: string | number = req.body.value;
 
   if (checkCorrectType(value)) {
     storageArray.push(value);
@@ -79,8 +81,8 @@ arrayRouter.post("/", isAdmin, (req, res) => {
 });
 
 arrayRouter.put("/:index", isAdmin, (req, res) => {
-  const value = req.body.value;
-  const arrayIndex = isIndexInArray(req.params.index, storageArray);
+  const value: string | number = req.body.value;
+  const arrayIndex = isIndexInArray(Number(req.params.index), storageArray);
   if (arrayIndex !== -1 && checkCorrectType(value)) {
     storageArray[arrayIndex] = value;
     res.json({
@@ -101,7 +103,7 @@ arrayRouter.delete("/", isAdmin, (req, res) => {
 });
 
 arrayRouter.delete("/:index", isAdmin, (req, res) => {
-  const arrayIndex = isIndexInArray(req.params.index, storageArray);
+  const arrayIndex = isIndexInArray(Number(req.params.index), storageArray);
   if (arrayIndex !== -1) {
     storageArray.splice(arrayIndex, 1);
     res.json({

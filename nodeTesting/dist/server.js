@@ -44,7 +44,7 @@ arrayRouter.get("/", (req, res) => {
     });
 });
 arrayRouter.get("/:index", (req, res) => {
-    const arrayIndex = logics_1.isIndexInArray(req.params.index, storage_1.storageArray);
+    const arrayIndex = logics_1.isIndexInArray(Number(req.params.index), storage_1.storageArray);
     if (arrayIndex !== -1) {
         const itemInIndex = storage_1.storageArray[arrayIndex];
         res.json({
@@ -73,7 +73,7 @@ arrayRouter.post("/", auth_1.isAdmin, (req, res) => {
 });
 arrayRouter.put("/:index", auth_1.isAdmin, (req, res) => {
     const value = req.body.value;
-    const arrayIndex = logics_1.isIndexInArray(req.params.index, storage_1.storageArray);
+    const arrayIndex = logics_1.isIndexInArray(Number(req.params.index), storage_1.storageArray);
     if (arrayIndex !== -1 && logics_1.checkCorrectType(value)) {
         storage_1.storageArray[arrayIndex] = value;
         res.json({
@@ -93,7 +93,7 @@ arrayRouter.delete("/", auth_1.isAdmin, (req, res) => {
     });
 });
 arrayRouter.delete("/:index", auth_1.isAdmin, (req, res) => {
-    const arrayIndex = logics_1.isIndexInArray(req.params.index, storage_1.storageArray);
+    const arrayIndex = logics_1.isIndexInArray(Number(req.params.index), storage_1.storageArray);
     if (arrayIndex !== -1) {
         storage_1.storageArray.splice(arrayIndex, 1);
         res.json({
