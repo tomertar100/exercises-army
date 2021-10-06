@@ -1,8 +1,10 @@
 import express from "express";
 import { storageArray } from "./storage";
-import { isIndexInArray, checkCorrectType } from "./logics";
+import { isIndexInArray, checkCorrectType } from "./logics/logics";
 import jwt from "jsonwebtoken";
-import { authenticateToken, isAdmin, secret } from "./auth";
+import { authenticateToken, isAdmin, secret } from "./logics/middleware";
+import nigger from "./routing/regularRouting";
+import errorHandler from "./erroHandler";
 
 const app = express();
 
@@ -24,97 +26,13 @@ app.post("/login", (req, res) => {
 
 app.use("/", authenticateToken);
 
-const arrayRouter = express.Router();
-app.use("/array", arrayRouter);
+app.use("/", nigger);
 
-//regular routing
-app.get("/", (req, res) => {
-  const date = new Date().toJSON().slice(0, 10);
-  const username = res.locals.user;
-
-  res.json({
-    msg: `Hello ${username} today is ${date}`,
-  });
+app.all("/login", (req, res) => {
+  res.status(405);
 });
 
-app.get("/echo", (req, res) => {
-  const msg = req.query.msg;
-  res.json({
-    echo: "the message is: " + msg,
-  });
-});
-
-//array routing
-arrayRouter.get("/", (req, res) => {
-  res.json({
-    array: storageArray,
-  });
-});
-
-arrayRouter.get("/:index", (req, res) => {
-  const arrayIndex = isIndexInArray(Number(req.params.index), storageArray);
-  if (arrayIndex !== -1) {
-    const itemInIndex = storageArray[arrayIndex];
-    res.json({
-      itemInIndex: itemInIndex,
-    });
-  } else {
-    res.status(400).json({
-      index: "invalid index",
-    });
-  }
-});
-
-arrayRouter.post("/", isAdmin, (req, res) => {
-  const value: string | number = req.body.value;
-
-  if (checkCorrectType(value)) {
-    storageArray.push(value);
-    res.json({
-      array: storageArray,
-    });
-  } else {
-    res.status(400).json({
-      value: "invalid value entered",
-    });
-  }
-});
-
-arrayRouter.put("/:index", isAdmin, (req, res) => {
-  const value: string | number = req.body.value;
-  const arrayIndex = isIndexInArray(Number(req.params.index), storageArray);
-  if (arrayIndex !== -1 && checkCorrectType(value)) {
-    storageArray[arrayIndex] = value;
-    res.json({
-      array: storageArray,
-    });
-  } else {
-    res.status(404).json({
-      index: "invalid index",
-    });
-  }
-});
-
-arrayRouter.delete("/", isAdmin, (req, res) => {
-  storageArray.pop();
-  res.json({
-    array: storageArray,
-  });
-});
-
-arrayRouter.delete("/:index", isAdmin, (req, res) => {
-  const arrayIndex = isIndexInArray(Number(req.params.index), storageArray);
-  if (arrayIndex !== -1) {
-    storageArray.splice(arrayIndex, 1);
-    res.json({
-      array: storageArray,
-    });
-  } else {
-    res.status(400).json({
-      index: "invalid index",
-    });
-  }
-});
+app.use(errorHandler);
 
 app.listen(3000, () => {
   console.log("listening at port 3000");
