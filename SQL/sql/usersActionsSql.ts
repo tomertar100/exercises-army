@@ -20,7 +20,6 @@ export async function getUserSql(username) {
     const result = await connected.query(
       `SELECT * FROM users WHERE username = '${username}'`
     );
-    console.log(result.rows[0]);
 
     return result.rows[0];
   } catch (error) {

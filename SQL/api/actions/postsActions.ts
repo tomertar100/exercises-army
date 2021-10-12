@@ -12,6 +12,6 @@ export async function getPost(id) {
   return await getPostSql(id);
 }
 
-export async function createPost(username, password) {
-  return await createPostSql(username, password);
+export async function createPost(user_id, content) {
+  return await createPostSql(user_id, content);
 }

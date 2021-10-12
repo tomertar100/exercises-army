@@ -9,24 +9,24 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createUser = exports.getUser = exports.getAllUsers = void 0;
-const usersActionsSql_1 = require("../../sql/usersActionsSql");
-function getAllUsers() {
+exports.createPost = exports.getPost = exports.getAllPosts = void 0;
+const postActionsSql_1 = require("../../sql/postActionsSql");
+function getAllPosts() {
     return __awaiter(this, void 0, void 0, function* () {
-        return yield (0, usersActionsSql_1.getAllUsersSql)();
+        return yield (0, postActionsSql_1.getAllPostsSql)();
     });
 }
-exports.getAllUsers = getAllUsers;
-function getUser(username) {
+exports.getAllPosts = getAllPosts;
+function getPost(id) {
     return __awaiter(this, void 0, void 0, function* () {
-        return yield (0, usersActionsSql_1.getUserSql)(username);
+        return yield (0, postActionsSql_1.getPostSql)(id);
     });
 }
-exports.getUser = getUser;
-function createUser(username, password) {
+exports.getPost = getPost;
+function createPost(user_id, content) {
     return __awaiter(this, void 0, void 0, function* () {
-        return yield (0, usersActionsSql_1.createUserSql)(username, password);
+        return yield (0, postActionsSql_1.createPostSql)(user_id, content);
     });
 }
-exports.createUser = createUser;
-//# sourceMappingURL=userAction.js.map
+exports.createPost = createPost;
+//# sourceMappingURL=postsActions.js.map

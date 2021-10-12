@@ -17,12 +17,8 @@ export async function getPostSql(id) {
   const connected = await pool.connect();
 
   try {
-    const result = await connected.query(
-      `SELECT * FROM posts WHERE id = '${id}'`
-    );
-    console.log(result.rows[0]);
-
-    return result.rows[0];
+    return (await connected.query(`SELECT * FROM posts WHERE id = '${id}'`))
+      .rows[0];
   } catch (error) {
     console.log("error querying: " + error);
     return;

@@ -22,9 +22,7 @@ userRouter.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* ()
 userRouter.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const username = req.body.username;
     const password = req.body.password;
-    console.log("error");
     yield (0, userAction_1.createUser)(username, password);
-    console.log("error2");
     const data = yield (0, userAction_1.getAllUsers)();
     res.json(data);
 }));
