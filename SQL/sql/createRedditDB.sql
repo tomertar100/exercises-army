@@ -1,5 +1,5 @@
 create table users(
-    id serial,
+    id int generated always as identity,
     username varchar(255),
     password varchar(255),
     PRIMARY KEY (id)
@@ -7,7 +7,7 @@ create table users(
 
 
 create table posts(
-    id serial,
+    id int generated always as identity,
     user_id int not null unique,
     content varchar(2500),
     rating int default 0,
@@ -19,7 +19,7 @@ create table posts(
 
 
 create table comments(
-    id serial,
+    id int generated always as identity,
     user_id int not null unique,
     post_id int not null unique,
     content varchar(2500),

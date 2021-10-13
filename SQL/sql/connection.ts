@@ -1,6 +1,6 @@
-import { Client } from "pg";
+import { Pool } from "pg";
 
-const client = new Client({
+export const pool = new Pool({
   user: "postgres",
   host: "localhost",
   database: "redditDB",
