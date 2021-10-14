@@ -18,6 +18,6 @@ postRouter.post("/", async (req, res) => {
   const user_id = req.body.user_id;
   const content = req.body.content;
   await createPost(user_id, content);
-  res.json("post created");
+  res.json("post Created");
 });
 export default postRouter;

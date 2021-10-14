@@ -2,7 +2,7 @@ import {
   getAllPostsSql,
   getPostSql,
   createPostSql,
-} from "../../sql/postActionsSql";
+} from "../../sql/postsActionsSql";
 
 export async function getAllPosts() {
   return await getAllPostsSql();

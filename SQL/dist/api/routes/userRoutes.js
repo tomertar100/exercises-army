@@ -23,8 +23,7 @@ userRouter.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* (
     const username = req.body.username;
     const password = req.body.password;
     yield (0, userAction_1.createUser)(username, password);
-    const data = yield (0, userAction_1.getAllUsers)();
-    res.json(data);
+    res.json("user Created");
 }));
 userRouter.get("/:username", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const username = req.params.username;

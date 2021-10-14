@@ -28,7 +28,7 @@ postRouter.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* (
     const user_id = req.body.user_id;
     const content = req.body.content;
     yield (0, postsActions_1.createPost)(user_id, content);
-    res.json("post created");
+    res.json("post Created");
 }));
 exports.default = postRouter;
 //# sourceMappingURL=postRoutes.js.map

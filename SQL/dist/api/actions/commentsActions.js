@@ -9,24 +9,24 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createPost = exports.getPost = exports.getAllPosts = void 0;
-const postsActionsSql_1 = require("../../sql/postsActionsSql");
-function getAllPosts() {
+exports.createComment = exports.getComment = exports.getAllComments = void 0;
+const commentsActionsSql_1 = require("../../sql/commentsActionsSql");
+function getAllComments() {
     return __awaiter(this, void 0, void 0, function* () {
-        return yield (0, postsActionsSql_1.getAllPostsSql)();
+        return yield (0, commentsActionsSql_1.getAllCommentsSql)();
     });
 }
-exports.getAllPosts = getAllPosts;
-function getPost(id) {
+exports.getAllComments = getAllComments;
+function getComment(id) {
     return __awaiter(this, void 0, void 0, function* () {
-        return yield (0, postsActionsSql_1.getPostSql)(id);
+        return yield (0, commentsActionsSql_1.getCommentSql)(id);
     });
 }
-exports.getPost = getPost;
-function createPost(user_id, content) {
+exports.getComment = getComment;
+function createComment(user_id, post_id, content) {
     return __awaiter(this, void 0, void 0, function* () {
-        return yield (0, postsActionsSql_1.createPostSql)(user_id, content);
+        return (0, commentsActionsSql_1.createCommentSql)(user_id, post_id, content);
     });
 }
-exports.createPost = createPost;
-//# sourceMappingURL=postsActions.js.map
+exports.createComment = createComment;
+//# sourceMappingURL=commentsActions.js.map

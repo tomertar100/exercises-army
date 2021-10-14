@@ -12,9 +12,7 @@ userRouter.post("/", async (req, res) => {
   const password = req.body.password;
 
   await createUser(username, password);
-
-  const data = await getAllUsers();
-  res.json(data);
+  res.json("user Created");
 });
 
 userRouter.get("/:username", async (req, res) => {
