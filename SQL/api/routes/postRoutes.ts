@@ -1,5 +1,11 @@
 import express from "express";
-import { getAllPosts, getPost, createPost } from "../actions/postsActions";
+import {
+  getAllPosts,
+  getPost,
+  createPost,
+  upvotePost,
+  downvotePost,
+} from "../actions/postsActions";
 
 const postRouter = express.Router();
 
@@ -19,5 +25,17 @@ postRouter.post("/", async (req, res) => {
   const content = req.body.content;
   await createPost(user_id, content);
   res.json("post Created");
+});
+
+postRouter.put("/upvote/:id", async (req, res) => {
+  const post_id = req.params.id;
+  await upvotePost(post_id);
+  res.json("upvoted");
+});
+
+postRouter.put("/downvote/:id", async (req, res) => {
+  const post_id = req.params.id;
+  await downvotePost(post_id);
+  res.json("downvoted");
 });
 export default postRouter;

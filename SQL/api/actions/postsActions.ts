@@ -2,6 +2,8 @@ import {
   getAllPostsSql,
   getPostSql,
   createPostSql,
+  upvotePostSql,
+  downvotePostSql,
 } from "../../sql/postsActionsSql";
 
 export async function getAllPosts() {
@@ -14,4 +16,12 @@ export async function getPost(id) {
 
 export async function createPost(user_id, content) {
   return await createPostSql(user_id, content);
+}
+
+export async function upvotePost(id) {
+  return await upvotePostSql(id);
+}
+
+export async function downvotePost(id) {
+  return await downvotePostSql(id);
 }

@@ -41,3 +41,35 @@ export async function createCommentSql(user_id, post_id, content) {
     await connected.release();
   }
 }
+
+export async function upvoteCommentSql(id) {
+  const connected = await pool.connect();
+
+  try {
+    const resultRating = (await getCommentSql(id)).rating + 1;
+    return await connected.query(
+      `UPDATE posts SET rating = ${resultRating} WHERE id = ${id}`
+    );
+  } catch (error) {
+    console.log("error querying: " + error);
+    return;
+  } finally {
+    connected.release();
+  }
+}
+
+export async function downvoteCommentSql(id) {
+  const connected = await pool.connect();
+
+  try {
+    const resultRating = (await getCommentSql(id)).rating - 1;
+    return await connected.query(
+      `UPDATE posts SET rating = ${resultRating} WHERE id = ${id}`
+    );
+  } catch (error) {
+    console.log("error querying: " + error);
+    return;
+  } finally {
+    connected.release();
+  }
+}
