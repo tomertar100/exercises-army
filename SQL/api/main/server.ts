@@ -3,7 +3,7 @@ import postRouter from "../routes/postRoutes";
 import userRouter from "../routes/userRoutes";
 import commentsRouter from "../routes/commentRoutes";
 import jwt from "jsonwebtoken";
-import { getAllUsers, getUser } from "../actions/userAction";
+import { getUser } from "../actions/userAction";
 import { authenticateToken, secretKey } from "./middleware";
 
 const port = 8000;
@@ -21,6 +21,8 @@ app.post("/api/login", async (req, res) => {
       username: username,
       accessToken: accessToken,
     });
+  } else {
+    res.status(401).json("user not found");
   }
 });
 
