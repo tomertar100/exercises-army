@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createPostSql = exports.getPostSql = exports.getAllPostsSql = void 0;
+exports.downvotePostSql = exports.upvotePostSql = exports.createPostSql = exports.getPostSql = exports.getAllPostsSql = void 0;
 const connection_1 = require("./connection");
 function getAllPostsSql() {
     return __awaiter(this, void 0, void 0, function* () {
@@ -60,4 +60,38 @@ function createPostSql(user_id, content) {
     });
 }
 exports.createPostSql = createPostSql;
+function upvotePostSql(id) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const connected = yield connection_1.pool.connect();
+        try {
+            const resultRating = (yield getPostSql(id)).rating + 1;
+            return yield connected.query(`UPDATE posts SET rating = ${resultRating} WHERE id = ${id}`);
+        }
+        catch (error) {
+            console.log("error querying: " + error);
+            return;
+        }
+        finally {
+            connected.release();
+        }
+    });
+}
+exports.upvotePostSql = upvotePostSql;
+function downvotePostSql(id) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const connected = yield connection_1.pool.connect();
+        try {
+            const resultRating = (yield getPostSql(id)).rating - 1;
+            return yield connected.query(`UPDATE posts SET rating = ${resultRating} WHERE id = ${id}`);
+        }
+        catch (error) {
+            console.log("error querying: " + error);
+            return;
+        }
+        finally {
+            connected.release();
+        }
+    });
+}
+exports.downvotePostSql = downvotePostSql;
 //# sourceMappingURL=postsActionsSql.js.map

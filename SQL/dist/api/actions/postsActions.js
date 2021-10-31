@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createPost = exports.getPost = exports.getAllPosts = void 0;
+exports.downvotePost = exports.upvotePost = exports.createPost = exports.getPost = exports.getAllPosts = void 0;
 const postsActionsSql_1 = require("../../sql/postsActionsSql");
 function getAllPosts() {
     return __awaiter(this, void 0, void 0, function* () {
@@ -29,4 +29,16 @@ function createPost(user_id, content) {
     });
 }
 exports.createPost = createPost;
+function upvotePost(id) {
+    return __awaiter(this, void 0, void 0, function* () {
+        return yield (0, postsActionsSql_1.upvotePostSql)(id);
+    });
+}
+exports.upvotePost = upvotePost;
+function downvotePost(id) {
+    return __awaiter(this, void 0, void 0, function* () {
+        return yield (0, postsActionsSql_1.downvotePostSql)(id);
+    });
+}
+exports.downvotePost = downvotePost;
 //# sourceMappingURL=postsActions.js.map

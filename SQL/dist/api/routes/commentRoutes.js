@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const commentsActions_1 = require("../actions/commentsActions");
+const middleware_1 = require("../main/middleware");
 const commentsRouter = express_1.default.Router();
 commentsRouter.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const data = yield (0, commentsActions_1.getAllComments)();
@@ -24,12 +25,22 @@ commentsRouter.get("/:id", (req, res) => __awaiter(void 0, void 0, void 0, funct
     const comment = yield (0, commentsActions_1.getComment)(id);
     res.json(comment);
 }));
-commentsRouter.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const user_id = req.params.user_id;
-    const post_id = req.params.post_id;
-    const content = req.params.content;
+commentsRouter.post("/", middleware_1.authenticateToken, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const user_id = req.body.user_id;
+    const post_id = req.body.post_id;
+    const content = req.body.content;
     yield (0, commentsActions_1.createComment)(user_id, post_id, content);
     res.json("comment Created");
+}));
+commentsRouter.put("/upvote/:id", middleware_1.authenticateToken, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const comment_id = req.params.id;
+    yield (0, commentsActions_1.upvoteComment)(comment_id);
+    res.json("upvoted");
+}));
+commentsRouter.put("/downvote/:id", middleware_1.authenticateToken, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const comment_id = req.params.id;
+    yield (0, commentsActions_1.downvoteComment)(comment_id);
+    res.json("downvoted");
 }));
 exports.default = commentsRouter;
 //# sourceMappingURL=commentRoutes.js.map

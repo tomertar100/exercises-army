@@ -3,7 +3,7 @@ import postRouter from "../routes/postRoutes";
 import userRouter from "../routes/userRoutes";
 import commentsRouter from "../routes/commentRoutes";
 import jwt from "jsonwebtoken";
-import { getUser } from "../actions/userAction";
+import { createUser, getUser } from "../actions/userAction";
 import { authenticateToken, secretKey } from "./middleware";
 
 const port = 8000;
@@ -17,12 +17,25 @@ app.post("/api/login", async (req, res) => {
   const loginUser = await getUser(username);
   if (loginUser) {
     const accessToken = jwt.sign(username, secretKey);
-    res.json({
+    res.status(201).json({
       username: username,
       accessToken: accessToken,
     });
   } else {
     res.status(401).json("user not found");
+  }
+});
+
+app.post("/api/signup", async (req, res) => {
+  const username = req.body.username;
+  const password = req.body.password;
+
+  const isUser = await getUser(username);
+  if (!isUser) {
+    await createUser(username, password);
+    res.json("user Created");
+  } else {
+    res.status(401).json("error: user already exists ");
   }
 });
 

@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createCommentSql = exports.getCommentSql = exports.getAllCommentsSql = void 0;
+exports.downvoteCommentSql = exports.upvoteCommentSql = exports.createCommentSql = exports.getCommentSql = exports.getAllCommentsSql = void 0;
 const connection_1 = require("./connection");
 function getAllCommentsSql() {
     return __awaiter(this, void 0, void 0, function* () {
@@ -60,4 +60,38 @@ function createCommentSql(user_id, post_id, content) {
     });
 }
 exports.createCommentSql = createCommentSql;
+function upvoteCommentSql(id) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const connected = yield connection_1.pool.connect();
+        try {
+            const resultRating = (yield getCommentSql(id)).rating + 1;
+            return yield connected.query(`UPDATE posts SET rating = ${resultRating} WHERE id = ${id}`);
+        }
+        catch (error) {
+            console.log("error querying: " + error);
+            return;
+        }
+        finally {
+            connected.release();
+        }
+    });
+}
+exports.upvoteCommentSql = upvoteCommentSql;
+function downvoteCommentSql(id) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const connected = yield connection_1.pool.connect();
+        try {
+            const resultRating = (yield getCommentSql(id)).rating - 1;
+            return yield connected.query(`UPDATE posts SET rating = ${resultRating} WHERE id = ${id}`);
+        }
+        catch (error) {
+            console.log("error querying: " + error);
+            return;
+        }
+        finally {
+            connected.release();
+        }
+    });
+}
+exports.downvoteCommentSql = downvoteCommentSql;
 //# sourceMappingURL=commentsActionsSql.js.map

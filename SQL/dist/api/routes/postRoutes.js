@@ -30,5 +30,15 @@ postRouter.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* (
     yield (0, postsActions_1.createPost)(user_id, content);
     res.json("post Created");
 }));
+postRouter.put("/upvote/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const post_id = req.params.id;
+    yield (0, postsActions_1.upvotePost)(post_id);
+    res.json("upvoted");
+}));
+postRouter.put("/downvote/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const post_id = req.params.id;
+    yield (0, postsActions_1.downvotePost)(post_id);
+    res.json("downvoted");
+}));
 exports.default = postRouter;
 //# sourceMappingURL=postRoutes.js.map
