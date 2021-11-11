@@ -8,8 +8,30 @@ function App() {
   const [inputText, setInputText] = useState("");
   const [inputDate, setInputDate] = useState("");
   const [todos, setTodos] = useState([]);
+  const [status, setStatus] = useState("all");
+  const [filteredTodos, setFilteredTodos] = useState([]);
+
+  const filterHandle = () => {
+    switch (status) {
+      case "completed":
+        setFilteredTodos(todos.filter((todo) => todo.completed === true));
+        break;
+      case "uncompleted":
+        setFilteredTodos(todos.filter((todo) => todo.completed === false));
+        break;
+      case "overdue":
+        setFilteredTodos(todos.filter((todo) => todo.overdue === true));
+        break;
+      default:
+        setFilteredTodos(todos);
+        break;
+    }
+  };
 
   useEffect(() => console.log(todos), [todos]);
+  useEffect(() => {
+    filterHandle();
+  }, [todos, status]);
 
   return (
     <div className="App">
@@ -22,6 +44,8 @@ function App() {
         setInputText={setInputText}
         inputDate={inputDate}
         setInputDate={setInputDate}
+        status={status}
+        setStatus={setStatus}
       />
       <TodoList
         setTodos={setTodos}

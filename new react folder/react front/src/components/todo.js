@@ -4,7 +4,7 @@ const Todo = ({ text, date, todos, setTodos, todo }) => {
   const handleDelete = () => {
     setTodos(todos.filter((item) => item.id !== todo.id));
   };
-  const handleComplete = () => {
+  const toggleComplete = () => {
     setTodos(
       todos.map((item) => {
         if (item.id === todo.id) {
@@ -18,11 +18,11 @@ const Todo = ({ text, date, todos, setTodos, todo }) => {
   return (
     <div className="todo">
       <li className="todo-item">
-        <p>{text}</p>
-        <p>{date}</p>
+        <p id="text">{text}</p>
+        <p id="date">{date}</p>
       </li>
       <button className="edit-button">edit</button>
-      <button onClick={handleComplete} className="complete-button">
+      <button onClick={toggleComplete} className="complete-button">
         complete
       </button>
       <button onClick={handleDelete} className="delete-button">
