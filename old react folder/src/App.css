@@ -1,9 +1,9 @@
 * {
-  box-sizing: border-box; 
-  margin: 0; 
+  box-sizing: border-box;
+  margin: 0;
   padding: 0;
-  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande',
-    'Lucida Sans', Arial, sans-serif;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
 }
 
 body {
@@ -16,7 +16,7 @@ body {
 
 .todo-app {
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
   justify-content: flex-start;
   width: 520px;
   min-height: 600px;
@@ -34,7 +34,7 @@ h1 {
 }
 
 .complete {
-  background-color: orangered;
+  background-color: grey;
   text-decoration: line-through;
   opacity: 0.4;
 }
@@ -43,15 +43,13 @@ h1 {
   margin-bottom: 32px;
 }
 
-
-
 .todo-input {
   padding: 14px 32px 14px 16px;
   border-radius: 4px 0 0 4px;
   border: 2px solid #100cff;
   outline: none;
   width: 320px;
-  background: transparent;
+  background: whitesmoke;
   color: #fff;
 }
 
@@ -63,7 +61,7 @@ h1 {
   border-top: none;
   outline: none;
   width: 320px;
-  background: transparent;
+  background: whitesmoke;
   color: #fff;
 }
 
@@ -77,7 +75,6 @@ h1 {
   opacity: 50%;
 }
 
-
 .todo-input::placeholder {
   color: #e2e2e2;
   opacity: 50%;
@@ -85,10 +82,10 @@ h1 {
 
 .todo-button {
   display: inline-block;
-  height:max-content;
+  height: max-content;
   padding: 16px;
   border: none;
-  border-radius: 0 4px 4px 0;
+  border-radius: 4px;
   cursor: pointer;
   outline: none;
   background: linear-gradient(
@@ -120,10 +117,9 @@ h1 {
 }
 
 .todo-row {
-  
   display: flex;
   justify-content: space-between;
-  align-items:flex-start;
+  align-items: flex-start;
   margin: 4px auto;
   color: #fff;
   background: linear-gradient(
@@ -136,8 +132,6 @@ h1 {
   border-radius: 5px;
   width: 90%;
 }
-
-
 
 .icons {
   display: flex;

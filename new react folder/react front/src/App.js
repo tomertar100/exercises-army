@@ -10,6 +10,14 @@ function App() {
   const [todos, setTodos] = useState([]);
   const [status, setStatus] = useState("all");
   const [filteredTodos, setFilteredTodos] = useState([]);
+  const [currentTime, setCurrentTime] = useState(new Date());
+
+  const today =
+    currentTime.getDate() +
+    "-" +
+    (currentTime.getMonth() + 1) +
+    "-" +
+    currentTime.getFullYear();
 
   const filterHandle = () => {
     switch (status) {
@@ -29,13 +37,18 @@ function App() {
   };
 
   useEffect(() => console.log(todos), [todos]);
+
+  useEffect(() => {
+    setInterval(() => setCurrentTime(new Date()), 1000);
+  }, []);
+
   useEffect(() => {
     filterHandle();
   }, [todos, status]);
 
   return (
     <div className="App">
-      <h1>ToDo's</h1>
+      <h1 display="block">ToDo's</h1>
 
       <Form
         todos={todos}
@@ -48,6 +61,9 @@ function App() {
         setStatus={setStatus}
       />
       <TodoList
+        setCurrentTime={setCurrentTime}
+        currentTime={currentTime}
+        filteredTodos={filteredTodos}
         setTodos={setTodos}
         todos={todos}
         inputText={inputText}

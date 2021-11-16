@@ -1,5 +1,4 @@
-import react from "react";
-import TodoList from "./todoList";
+import react, { useRef, useEffect } from "react";
 
 const Form = ({
   inputText,
@@ -11,6 +10,11 @@ const Form = ({
   status,
   setStatus,
 }) => {
+  const inputRef = useRef(null);
+  useEffect(() => {
+    inputRef.current.focus();
+  });
+
   const handleInputText = (e) => {
     const value = e.target.value;
 
@@ -24,6 +28,13 @@ const Form = ({
 
   const handleSubmitTodo = (e) => {
     e.preventDefault();
+    if (!inputText || /^\s*$/.test(inputText)) {
+      return;
+    }
+
+    if (inputDate === null || inputDate === "") {
+      return;
+    }
     setTodos([
       ...todos,
       {
@@ -31,6 +42,7 @@ const Form = ({
         date: inputDate,
         completed: false,
         overdue: false,
+        isEditing: false,
         id: Math.random() * 10000,
       },
     ]);
@@ -47,9 +59,10 @@ const Form = ({
       <input
         placeholder="Enter A Todo"
         type="text"
-        clasName="todo-input"
+        className="todo-input"
         onChange={handleInputText}
         value={inputText}
+        ref={inputRef}
       />
       <input
         type="date"
@@ -59,16 +72,15 @@ const Form = ({
       />
 
       <button onClick={handleSubmitTodo} type="submit" className="todo-button">
-        <i>+</i>
+        <i>Add</i>
       </button>
-      {/* <div className="selectOptions"> */}
+
       <select onChange={handleSelect}>
         <option value="all">All</option>
         <option value="completed">Completed</option>
         <option value="uncompleted">Uncompleted</option>
         <option value="overdue">Overdue</option>
       </select>
-      {/* </div> */}
     </form>
   );
 };
