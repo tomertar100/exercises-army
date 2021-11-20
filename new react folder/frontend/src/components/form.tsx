@@ -36,12 +36,12 @@ const Form = ({
     setTodos([
       ...todos,
       {
+        id: todos.length + 1,
         text: inputText,
         date: inputDate,
         completed: false,
         overdue: false,
         isEditing: false,
-        id: Math.random() * 10000,
       },
     ]);
     setInputText("");
