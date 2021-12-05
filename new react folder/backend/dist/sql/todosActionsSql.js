@@ -11,11 +11,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteTodoSql = exports.updateTodoSql = exports.addTodoSql = exports.getAllTodosSql = void 0;
 const connections_1 = require("./connections");
-function getAllTodosSql() {
+function getAllTodosSql(user_id) {
     return __awaiter(this, void 0, void 0, function* () {
         const connected = yield connections_1.pool.connect();
         try {
-            return (yield connected.query(`SELECT * FROM todos`)).rows;
+            const result = yield connected.query(`SELECT * FROM todos where user_id = '${user_id}'`);
+            return result.rows;
         }
         catch (error) {
             console.log("error querying: " + error);
@@ -27,11 +28,11 @@ function getAllTodosSql() {
     });
 }
 exports.getAllTodosSql = getAllTodosSql;
-function addTodoSql(text, date, completed, overdue, isEditing) {
+function addTodoSql(user_id, text, date, completed, overdue, isEditing) {
     return __awaiter(this, void 0, void 0, function* () {
         const connected = yield connections_1.pool.connect();
         try {
-            return yield connected.query(`INSERT INTO todos(text,date,completed,overdue,isEditing) VALUES('${text}','${date}',${completed},${overdue},${isEditing})`);
+            return yield connected.query(`INSERT INTO todos(user_id,text,date,completed,overdue,isEditing) VALUES(${user_id},'${text}','${date}',${completed},${overdue},${isEditing})`);
         }
         catch (error) {
             console.log("error querying: " + error);
@@ -46,7 +47,7 @@ function updateTodoSql(id, text, date) {
     return __awaiter(this, void 0, void 0, function* () {
         const connected = yield connections_1.pool.connect();
         try {
-            return yield connected.query(`UPDATE todos SET text=${text},date=${date} WHERE id =${id}`);
+            return yield connected.query(`UPDATE todos SET text='${text}',date='${date}' WHERE task_id =${id}`);
         }
         catch (error) {
             console.log("error querying: " + error);
@@ -62,7 +63,7 @@ function deleteTodoSql(id) {
     return __awaiter(this, void 0, void 0, function* () {
         const connected = yield connections_1.pool.connect();
         try {
-            return yield connected.query(`DELETE FROM todos where id = ${id}`);
+            return yield connected.query(`DELETE FROM todos where task_id = ${id}`);
         }
         catch (error) {
             console.log("error querying: " + error);

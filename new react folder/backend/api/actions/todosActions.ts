@@ -5,12 +5,19 @@ import {
   deleteTodoSql,
 } from "../../sql/todosActionsSql";
 
-export async function getAllTodos() {
-  return await getAllTodosSql;
+export async function getAllTodos(user_id) {
+  return await getAllTodosSql(user_id);
 }
 
-export async function addTodo(text, date, completed, overdue, isEditing) {
-  return await addTodoSql(text, date, completed, overdue, isEditing);
+export async function addTodo(
+  user_id,
+  text,
+  date,
+  completed,
+  overdue,
+  isEditing
+) {
+  return await addTodoSql(user_id, text, date, completed, overdue, isEditing);
 }
 
 export async function updateTodo(id, text, date) {

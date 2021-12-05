@@ -11,15 +11,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteTodo = exports.updateTodo = exports.addTodo = exports.getAllTodos = void 0;
 const todosActionsSql_1 = require("../../sql/todosActionsSql");
-function getAllTodos() {
+function getAllTodos(user_id) {
     return __awaiter(this, void 0, void 0, function* () {
-        return yield todosActionsSql_1.getAllTodosSql;
+        return yield (0, todosActionsSql_1.getAllTodosSql)(user_id);
     });
 }
 exports.getAllTodos = getAllTodos;
-function addTodo(text, date, completed, overdue, isEditing) {
+function addTodo(user_id, text, date, completed, overdue, isEditing) {
     return __awaiter(this, void 0, void 0, function* () {
-        return yield (0, todosActionsSql_1.addTodoSql)(text, date, completed, overdue, isEditing);
+        return yield (0, todosActionsSql_1.addTodoSql)(user_id, text, date, completed, overdue, isEditing);
     });
 }
 exports.addTodo = addTodo;

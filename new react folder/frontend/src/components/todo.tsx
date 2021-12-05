@@ -50,7 +50,7 @@ const TodoItem = ({
     setTodos(
       todos.map((item) => {
         if (item.id === todo.id) {
-          return { ...item, isEditing: true };
+          return { ...item, isEditing: !item.isEditing };
         }
         return item;
       })
@@ -111,7 +111,11 @@ const TodoItem = ({
         <button onClick={toggleComplete} className="complete-button">
           complete
         </button>
-      ) : null}
+      ) : (
+        <button className="cancel-button" onClick={toggleEdit}>
+          cancel
+        </button>
+      )}
       {!todo.isEditing ? (
         <button onClick={handleDelete} className="delete-button">
           delete

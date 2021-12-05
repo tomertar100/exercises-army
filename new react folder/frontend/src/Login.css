@@ -1,0 +1,24 @@
+.login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.loginform-button {
+  display: block;
+  background: none;
+  border: none;
+  margin: 0px 0px 10px 0px;
+  padding: 0;
+}
+
+.link {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.loginform-button:hover {
+  color: blueviolet;
+  text-decoration-line: underline;
+  text-decoration-style: solid;
+}

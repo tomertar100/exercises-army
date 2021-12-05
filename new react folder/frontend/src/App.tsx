@@ -1,5 +1,6 @@
 import React, { FC, useState, useEffect } from "react";
 import "./App.css";
+import axios from "./axios";
 
 //importing components
 import Form from "./components/form";
