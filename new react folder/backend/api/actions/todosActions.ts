@@ -2,6 +2,7 @@ import {
   getAllTodosSql,
   addTodoSql,
   updateTodoSql,
+  updateCompleteSql,
   deleteTodoSql,
 } from "../../sql/todosActionsSql";
 
@@ -22,6 +23,10 @@ export async function addTodo(
 
 export async function updateTodo(id, text, date) {
   return await updateTodoSql(id, text, date);
+}
+
+export async function updateComplete(id, complete) {
+  return await updateCompleteSql(id, complete);
 }
 
 export async function deleteTodo(id) {

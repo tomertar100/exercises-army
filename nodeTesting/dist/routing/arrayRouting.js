@@ -41,23 +41,18 @@ arrayRouter.all("/", (req, res) => {
         method: "invalid method used",
     });
 });
-arrayRouter.all("/", (req, res) => {
-    res.status(404).json({
-        route: "thie route doesnt exist",
-    });
-});
 arrayRouter
     .route("/:index")
     .get((req, res) => {
-    const arrayIndex = logics_1.isIndexInArray(Number(req.params.index), storage_1.storageArray);
-    if (arrayIndex !== -1) {
-        const itemInIndex = storage_1.storageArray[arrayIndex];
-        res.json({
-            itemInIndex: itemInIndex,
-        });
-    }
-    else {
-        if (typeof arrayIndex === "number") {
+    if (req.params.index) {
+        const arrayIndex = logics_1.isIndexInArray(Number(req.params.index), storage_1.storageArray);
+        if (arrayIndex !== -1) {
+            const itemInIndex = storage_1.storageArray[arrayIndex];
+            res.json({
+                itemInIndex: itemInIndex,
+            });
+        }
+        else {
             res.status(400).json({
                 index: "invalid index",
             });
@@ -66,31 +61,33 @@ arrayRouter
 })
     .put(middleware_1.isAdmin, (req, res) => {
     const value = req.body.value;
-    const arrayIndex = logics_1.isIndexInArray(Number(req.params.index), storage_1.storageArray);
-    if (arrayIndex !== -1 && logics_1.checkCorrectType(value)) {
-        storage_1.storageArray[arrayIndex] = value;
-        res.json({
-            array: storage_1.storageArray,
-        });
-    }
-    else {
-        if (typeof arrayIndex === "number") {
-            res.status(400).json({
-                index: "invalid index",
+    if (typeof req.params.index === "number") {
+        const arrayIndex = logics_1.isIndexInArray(Number(req.params.index), storage_1.storageArray);
+        if (arrayIndex !== -1 && logics_1.checkCorrectType(value)) {
+            storage_1.storageArray[arrayIndex] = value;
+            res.json({
+                array: storage_1.storageArray,
             });
+        }
+        else {
+            if (typeof arrayIndex === "number") {
+                res.status(400).json({
+                    index: "invalid index",
+                });
+            }
         }
     }
 })
     .delete(middleware_1.isAdmin, (req, res) => {
-    const arrayIndex = logics_1.isIndexInArray(Number(req.params.index), storage_1.storageArray);
-    if (arrayIndex !== -1) {
-        storage_1.storageArray.splice(arrayIndex, 1);
-        res.json({
-            array: storage_1.storageArray,
-        });
-    }
-    else {
-        if (typeof arrayIndex === "number") {
+    if (req.params.index) {
+        const arrayIndex = logics_1.isIndexInArray(Number(req.params.index), storage_1.storageArray);
+        if (arrayIndex !== -1) {
+            storage_1.storageArray.splice(arrayIndex, 1);
+            res.json({
+                array: storage_1.storageArray,
+            });
+        }
+        else {
             res.status(400).json({
                 index: "invalid index",
             });
@@ -102,7 +99,7 @@ arrayRouter.all("/:index", (req, res) => {
         method: "invalid method used",
     });
 });
-arrayRouter.all("*", (req, res) => {
+arrayRouter.all("/", (req, res) => {
     res.status(404).json({
         route: "invalid route",
     });

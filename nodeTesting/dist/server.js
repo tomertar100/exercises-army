@@ -7,6 +7,7 @@ const express_1 = __importDefault(require("express"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const middleware_1 = require("./logics/middleware");
 const regularRouting_1 = __importDefault(require("./routing/regularRouting"));
+// import errorHandler from "./erroHandler";
 const app = express_1.default();
 //parses body of the request
 app.use(express_1.default.json());
@@ -24,6 +25,7 @@ app.use("/", regularRouting_1.default);
 app.all("/login", (req, res) => {
     res.status(405);
 });
+// app.use(errorHandler);
 app.listen(3000, () => {
     console.log("listening at port 3000");
 });

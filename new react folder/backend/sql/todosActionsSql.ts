@@ -52,6 +52,21 @@ export async function updateTodoSql(id, text, date) {
   }
 }
 
+export async function updateCompleteSql(id, complete) {
+  const connected = await pool.connect();
+
+  try {
+    return await connected.query(
+      `UPDATE todos SET complete=${complete} WHERE task_id =${id}`
+    );
+  } catch (error) {
+    console.log("error querying: " + error);
+    return;
+  } finally {
+    connected.release();
+  }
+}
+
 export async function deleteTodoSql(id) {
   const connected = await pool.connect();
 

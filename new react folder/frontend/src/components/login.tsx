@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import axios, {
   setSessionStorageToken,
   loginToServer,
@@ -12,7 +12,7 @@ const LoginPage = () => {
   const [password, setPassword] = useState<string>("");
 
   const onLoginClick = async () => {
-    if (username == "" || password == "") {
+    if (username === "" || password === "") {
       return;
     }
 
@@ -20,6 +20,7 @@ const LoginPage = () => {
 
     if (res.status === 200) {
       setSessionStorageToken(res.data.accessToken);
+      sessionStorage.setItem("user_id", res.data.user_id.toString());
 
       window.location.href = "app";
     } else {
@@ -29,13 +30,13 @@ const LoginPage = () => {
   };
 
   const onRegisterClick = async () => {
-    if (username == "" || password == "") {
+    if (username === "" || password === "") {
       return;
     }
 
     const res = await registerToServer(username, password);
 
-    if (res.status == 201) {
+    if (res.status === 201) {
       return onLoginClick();
     } else {
       alert(res.data);

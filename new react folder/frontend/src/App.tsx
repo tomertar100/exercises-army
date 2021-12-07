@@ -1,6 +1,6 @@
-import React, { FC, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
-import axios from "./axios";
+import { getTodos } from "./axios";
 
 //importing components
 import Form from "./components/form";
@@ -9,17 +9,16 @@ import TodoList from "./components/todoList";
 //room for types
 
 export type Todo = {
+  task_id: string | null;
+  user_id: number | string | null;
   text: string;
   date: string;
   completed: boolean;
   overdue: boolean;
   isEditing: boolean;
-  id: number;
 };
 
 function App() {
-  const [inputText, setInputText] = useState<string>("");
-  const [inputDate, setInputDate] = useState<string>("");
   const [todos, setTodos] = useState<Todo[]>([]);
   const [status, setStatus] = useState<string>("all");
   const [filteredTodos, setFilteredTodos] = useState<Todo[]>([]);
@@ -42,11 +41,29 @@ function App() {
     }
   };
 
-  useEffect(() => console.log(todos), [todos]);
+  const retrieveTodos = () => {
+    const token = sessionStorage.getItem("JWT");
+    const user_id = sessionStorage.getItem("user_id");
+    getTodos(user_id, token).then((res) => {
+      setFilteredTodos(res);
+      setTodos(res);
+      console.log("fetching response: ", res);
+      console.log("todos after fetching: ", todos);
+    });
+  };
+
+  useEffect(() => {
+    retrieveTodos();
+  }, []);
 
   useEffect(() => {
     setInterval(() => setCurrentTime(new Date()), 1000);
   }, []);
+
+  useEffect(
+    () => console.log("todos - after change to todos: ", todos),
+    [todos]
+  );
 
   useEffect(() => {
     filterHandle();
@@ -59,12 +76,9 @@ function App() {
       <Form
         todos={todos}
         setTodos={setTodos}
-        inputText={inputText}
-        setInputText={setInputText}
-        inputDate={inputDate}
-        setInputDate={setInputDate}
         status={status}
         setStatus={setStatus}
+        setFilteredTodos={setFilteredTodos}
       />
       <TodoList
         setCurrentTime={setCurrentTime}
@@ -72,6 +86,7 @@ function App() {
         filteredTodos={filteredTodos}
         setTodos={setTodos}
         todos={todos}
+        setFilteredTodos={setFilteredTodos}
       />
     </div>
   );

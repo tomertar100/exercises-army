@@ -15,8 +15,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const todosActions_1 = require("../actions/todosActions");
 const todosRouter = express_1.default.Router();
-todosRouter.get("/todos", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const user_id = req.body.user_id;
+todosRouter.get("/todos/:user_id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const user_id = req.params.user_id;
     const data = yield (0, todosActions_1.getAllTodos)(user_id);
     res.json(data);
 }));
@@ -30,12 +30,18 @@ todosRouter.post("/createtodo", (req, res) => __awaiter(void 0, void 0, void 0, 
     yield (0, todosActions_1.addTodo)(user_id, text, date, completed, overdue, isEditing);
     res.json("added new todo");
 }));
-todosRouter.put("/updatetodo/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+todosRouter.patch("/updatetodo/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const id = req.params.id;
     const text = req.body.text;
     const date = req.body.date;
     yield (0, todosActions_1.updateTodo)(id, text, date);
     res.json("todo updated");
+}));
+todosRouter.patch("/updatecomplete/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const id = req.params.id;
+    const completed = req.body.completed;
+    yield (0, todosActions_1.updateComplete)(id, completed);
+    res.json("todo complete field updated");
 }));
 todosRouter.delete("/deletetodo/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const id = req.params.id;

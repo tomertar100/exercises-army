@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Todo } from "../src/App";
 
 type LoginToServer = (username: string, password: string) => any;
 type registerToServer = (username: string, password: string) => any;
@@ -9,7 +10,7 @@ const serverUrl = "http://localhost:3002/";
 const getConfig = () => {
   return {
     headers: {
-      Authorization: `bearer ${sessionStorage.getItem(sessionStorageObject)}`,
+      authorization: `bearer ${sessionStorage.getItem(sessionStorageObject)}`,
       "Content-Type": "application/json",
     },
   };
@@ -27,7 +28,7 @@ export const errorHandling = (error: any) => {
     // no response
     console.log(error.request);
   } else {
-    // something happened
+    // something happened in the middle
     console.log("Error", error.message);
   }
 };
@@ -73,6 +74,115 @@ export const registerToServer: registerToServer = async (
       console.log(res);
       return res;
     })
+    .catch(errorHandling);
+};
+
+axios.defaults.baseURL = serverUrl;
+
+//todos axios request
+
+//get all the todos from server
+
+export const getEverything = async (token: string | null) => {
+  return await axios
+    .get(serverUrl + "/todoapp/alltodos", {
+      headers: {
+        authorization: `bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    })
+    .then((res) => {
+      return res.data;
+    })
+    .catch(errorHandling);
+};
+
+//get todos from server based on user_id
+
+export const getTodos = async (
+  user_id: string | null,
+  token: string | null
+) => {
+  return await axios
+    .get(serverUrl + `todoapp/todos/${user_id}`, {
+      headers: {
+        authorization: `bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    })
+    .then((res) => {
+      return res.data;
+    })
+    .catch(errorHandling);
+};
+
+//create todo
+
+export const createTodo = async (
+  task_id: string | null,
+  user_id: number | string | null,
+  text: string,
+  date: string,
+  completed: boolean,
+  overdue: boolean,
+  isEditing: boolean,
+  token: string | null
+) => {
+  const data = JSON.stringify({
+    user_id: user_id,
+    text: text,
+    date: date,
+    completed: completed,
+    overdue: overdue,
+    isEditing: isEditing,
+  });
+
+  return await axios
+    .post(serverUrl + "todoapp/createtodo", data, {
+      headers: {
+        authorization: `bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    })
+    .then((res) => res.data)
+    .catch(errorHandling);
+};
+
+//delete todo
+
+export const deleteTodo = async (id: string | null, token: string | null) => {
+  return await axios
+    .delete(serverUrl + `todoapp/deletetodo/${id}`, {
+      headers: {
+        authorization: `bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    })
+    .then((res) => console.log(res))
+    .catch(errorHandling);
+};
+
+//update todo
+
+export const updateTodo = async (
+  id: string | null,
+  text: string,
+  date: string,
+  token: string | null
+) => {
+  const data = JSON.stringify({
+    text: text,
+    date: date,
+  });
+
+  return await axios
+    .put(serverUrl + `todoapp/updatetodo/${id}`, data, {
+      headers: {
+        authorization: `bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    })
+    .then((res) => console.log(res))
     .catch(errorHandling);
 };
 

@@ -4,7 +4,7 @@ import { isIndexInArray, checkCorrectType } from "./logics/logics";
 import jwt from "jsonwebtoken";
 import { authenticateToken, isAdmin, secret } from "./logics/middleware";
 import nigger from "./routing/regularRouting";
-import errorHandler from "./erroHandler";
+// import errorHandler from "./erroHandler";
 
 const app = express();
 
@@ -32,7 +32,7 @@ app.all("/login", (req, res) => {
   res.status(405);
 });
 
-app.use(errorHandler);
+// app.use(errorHandler);
 
 app.listen(3000, () => {
   console.log("listening at port 3000");

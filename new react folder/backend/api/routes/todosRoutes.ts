@@ -3,13 +3,14 @@ import {
   getAllTodos,
   addTodo,
   updateTodo,
+  updateComplete,
   deleteTodo,
 } from "../actions/todosActions";
 
 const todosRouter = express.Router();
 
-todosRouter.get("/todos", async (req, res) => {
-  const user_id = req.body.user_id;
+todosRouter.get("/todos/:user_id", async (req, res) => {
+  const user_id = req.params.user_id;
   const data = await getAllTodos(user_id);
   res.json(data);
 });
@@ -26,13 +27,21 @@ todosRouter.post("/createtodo", async (req, res) => {
   res.json("added new todo");
 });
 
-todosRouter.put("/updatetodo/:id", async (req, res) => {
+todosRouter.patch("/updatetodo/:id", async (req, res) => {
   const id = req.params.id;
   const text = req.body.text;
   const date = req.body.date;
 
   await updateTodo(id, text, date);
   res.json("todo updated");
+});
+
+todosRouter.patch("/updatecomplete/:id", async (req, res) => {
+  const id = req.params.id;
+  const completed = req.body.completed;
+
+  await updateComplete(id, completed);
+  res.json("todo complete field updated");
 });
 
 todosRouter.delete("/deletetodo/:id", async (req, res) => {

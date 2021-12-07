@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 //importing more components
 import TodoItem from "./todo";
 import { Todo } from "../App";
@@ -10,6 +10,7 @@ type TodoListProps = {
   filteredTodos: Todo[];
   setCurrentTime: React.Dispatch<React.SetStateAction<Date>>;
   currentTime: Date;
+  setFilteredTodos: React.Dispatch<React.SetStateAction<Todo[]>>;
 };
 
 const TodoList = ({
@@ -18,7 +19,13 @@ const TodoList = ({
   filteredTodos,
   setCurrentTime,
   currentTime,
+  setFilteredTodos,
 }: TodoListProps) => {
+  useEffect(
+    () => console.log("ToDoList filteredTodos: ", filteredTodos),
+    [filteredTodos]
+  );
+
   return (
     <div className="todo-container">
       <ul className="todo">
@@ -30,6 +37,7 @@ const TodoList = ({
             todos={todos}
             setTodos={setTodos}
             todo={todo}
+            setFilteredTodos={setFilteredTodos}
           />
         ))}
       </ul>

@@ -1,51 +1,80 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Todo } from "../App";
+import { createTodo, getTodos } from "../axios";
 
 //types
 
 type FormProps = {
-  inputText: string;
-  setInputText: React.Dispatch<React.SetStateAction<string>>;
-  inputDate: string;
-  setInputDate: React.Dispatch<React.SetStateAction<string>>;
   todos: Todo[];
   setTodos: React.Dispatch<React.SetStateAction<Todo[]>>;
   status: string;
   setStatus: React.Dispatch<React.SetStateAction<string>>;
+  setFilteredTodos: React.Dispatch<React.SetStateAction<Todo[]>>;
 };
 
 const Form = ({
-  inputText,
-  setInputText,
-  inputDate,
-  setInputDate,
   todos,
   setTodos,
   status,
   setStatus,
+  setFilteredTodos,
 }: FormProps) => {
-  const handleSubmitTodo = (e: any) => {
+  const user_id = sessionStorage.getItem("user_id");
+
+  const token = sessionStorage.getItem("JWT");
+
+  const retrieveTodos = () => {
+    getTodos(user_id, token).then((res) => {
+      setFilteredTodos(res);
+      setTodos(res);
+      setNewTask(intialNewTaskState);
+    });
+  };
+
+  const generateRandomId = () => {
+    return Math.floor(Math.random() * 10000).toString();
+  };
+
+  const intialNewTaskState: Todo = {
+    task_id: "",
+    user_id: user_id,
+    text: "",
+    date: "",
+    completed: false,
+    overdue: false,
+    isEditing: false,
+  };
+
+  const [newTask, setNewTask] = useState(intialNewTaskState);
+
+  useEffect(() => console.log("new Task: ", newTask), [newTask]);
+
+  const handleSubmitTodo = async (e: any) => {
     e.preventDefault();
-    if (!inputText || /^\s*$/.test(inputText)) {
+    if (!newTask.text || /^\s*$/.test(newTask.text)) {
       return;
     }
 
-    if (inputDate === null || inputDate === "") {
+    if (newTask.date === null || newTask.date === "") {
       return;
     }
-    setTodos([
-      ...todos,
-      {
-        id: todos.length + 1,
-        text: inputText,
-        date: inputDate,
-        completed: false,
-        overdue: false,
-        isEditing: false,
-      },
-    ]);
-    setInputText("");
-    setInputDate("");
+
+    console.log("sending data");
+
+    await createTodo(
+      newTask.task_id,
+      newTask.user_id,
+      newTask.text,
+      newTask.date,
+      newTask.completed,
+      newTask.overdue,
+      newTask.isEditing,
+      token
+    );
+
+    console.log("data sent");
+
+    await retrieveTodos();
   };
 
   return (
@@ -54,14 +83,27 @@ const Form = ({
         placeholder="Enter A Todo"
         type="text"
         className="todo-input"
-        onChange={(e: any) => setInputText(e.target.value)}
-        value={inputText}
+        onChange={(e: any) => {
+          setNewTask({
+            ...newTask,
+            text: e.target.value,
+            task_id: generateRandomId(),
+          });
+        }}
+        value={newTask.text}
       />
       <input
         type="date"
         className="todo-date-input"
-        onChange={(e: any) => setInputDate(e.target.value)}
-        value={inputDate}
+        onChange={(e: any) => {
+          setNewTask({
+            ...newTask,
+            date: e.target.value,
+            task_id: generateRandomId(),
+          });
+          console.log("new task date change: ", newTask);
+        }}
+        value={newTask.date}
       />
 
       <button onClick={handleSubmitTodo} type="submit" className="todo-button">

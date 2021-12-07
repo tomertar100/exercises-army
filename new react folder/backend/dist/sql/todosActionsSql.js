@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteTodoSql = exports.updateTodoSql = exports.addTodoSql = exports.getAllTodosSql = void 0;
+exports.deleteTodoSql = exports.updateCompleteSql = exports.updateTodoSql = exports.addTodoSql = exports.getAllTodosSql = void 0;
 const connections_1 = require("./connections");
 function getAllTodosSql(user_id) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -59,6 +59,22 @@ function updateTodoSql(id, text, date) {
     });
 }
 exports.updateTodoSql = updateTodoSql;
+function updateCompleteSql(id, complete) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const connected = yield connections_1.pool.connect();
+        try {
+            return yield connected.query(`UPDATE todos SET complete=${complete} WHERE task_id =${id}`);
+        }
+        catch (error) {
+            console.log("error querying: " + error);
+            return;
+        }
+        finally {
+            connected.release();
+        }
+    });
+}
+exports.updateCompleteSql = updateCompleteSql;
 function deleteTodoSql(id) {
     return __awaiter(this, void 0, void 0, function* () {
         const connected = yield connections_1.pool.connect();

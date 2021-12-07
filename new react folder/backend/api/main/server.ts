@@ -18,7 +18,8 @@ app.post("/login", async (req, res) => {
   if (loginUser) {
     if (loginUser.password === password) {
       const accessToken = jwt.sign(username, secretKey);
-      res.json({ accessToken: accessToken });
+
+      res.json({ accessToken: accessToken, user_id: loginUser.user_id });
     } else {
       res.status(401).json("password not matching");
     }
@@ -28,8 +29,6 @@ app.post("/login", async (req, res) => {
 });
 
 app.post("/register", async (req, res) => {
-  console.log(req.body);
-
   const username = req.body.username;
   const password = req.body.password;
 

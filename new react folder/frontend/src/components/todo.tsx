@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Todo } from "../App";
+import { getTodos, deleteTodo } from "../axios";
 //types
 
 type todoItemProps = {
@@ -9,6 +10,7 @@ type todoItemProps = {
   setTodos: React.Dispatch<React.SetStateAction<Todo[]>>;
   todo: Todo;
   currentTime: Date;
+  setFilteredTodos: React.Dispatch<React.SetStateAction<Todo[]>>;
 };
 const TodoItem = ({
   text,
@@ -17,9 +19,26 @@ const TodoItem = ({
   setTodos,
   todo,
   currentTime,
+  setFilteredTodos,
 }: todoItemProps) => {
+  //global variables
+
+  const user_id = sessionStorage.getItem("user_id");
+  const token = sessionStorage.getItem("JWT");
+
+  //states
+
   const [editText, setEditText] = useState("");
   const [editDate, setEditDate] = useState("");
+
+  //functions
+
+  const retrieveTodos = () => {
+    getTodos(user_id, token).then((res) => {
+      setFilteredTodos(res);
+      setTodos(res);
+    });
+  };
 
   useEffect(() => {
     if (
@@ -32,13 +51,14 @@ const TodoItem = ({
     }
   }, [currentTime]);
 
-  const handleDelete = () => {
-    setTodos(todos.filter((item) => item.id !== todo.id));
+  const handleDelete = async () => {
+    await deleteTodo(todo.task_id, token);
+    await retrieveTodos();
   };
   const toggleComplete = () => {
     setTodos(
       todos.map((item) => {
-        if (item.id === todo.id) {
+        if (item.task_id === todo.task_id) {
           return { ...item, completed: !item.completed };
         }
         return item;
@@ -49,7 +69,7 @@ const TodoItem = ({
   const toggleEdit = () => {
     setTodos(
       todos.map((item) => {
-        if (item.id === todo.id) {
+        if (item.task_id === todo.task_id) {
           return { ...item, isEditing: !item.isEditing };
         }
         return item;
@@ -60,7 +80,7 @@ const TodoItem = ({
   const handleEdit = () => {
     setTodos(
       todos.map((item) => {
-        if (item.id === todo.id) {
+        if (item.task_id === todo.task_id) {
           if (!editText || /^\s*$/.test(editText)) {
             return item;
           }
@@ -80,7 +100,7 @@ const TodoItem = ({
 
   return (
     <div className="todo">
-      <li key={todo.id} className="todo-item">
+      <li key={todo.task_id} className="todo-item">
         {!todo.isEditing ? (
           <p id="text">{text}</p>
         ) : (

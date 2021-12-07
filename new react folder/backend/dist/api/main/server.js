@@ -30,7 +30,7 @@ app.post("/login", (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     if (loginUser) {
         if (loginUser.password === password) {
             const accessToken = jsonwebtoken_1.default.sign(username, middleware_1.secretKey);
-            res.json({ accessToken: accessToken });
+            res.json({ accessToken: accessToken, user_id: loginUser.user_id });
         }
         else {
             res.status(401).json("password not matching");
@@ -41,7 +41,6 @@ app.post("/login", (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
 }));
 app.post("/register", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(req.body);
     const username = req.body.username;
     const password = req.body.password;
     const isUser = yield (0, userActions_1.getUser)(username);

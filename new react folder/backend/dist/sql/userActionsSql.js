@@ -14,10 +14,8 @@ const connections_1 = require("./connections");
 function getUserSql(username) {
     return __awaiter(this, void 0, void 0, function* () {
         const connected = yield connections_1.pool.connect();
-        console.log(username);
         try {
             const result = yield connected.query(`SELECT * FROM users WHERE username ='${username}'`);
-            console.log(result);
             return result.rows[0];
         }
         catch (error) {
