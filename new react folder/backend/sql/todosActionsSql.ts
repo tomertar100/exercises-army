@@ -5,7 +5,7 @@ export async function getAllTodosSql(user_id) {
 
   try {
     const result = await connected.query(
-      `SELECT * FROM todos where user_id = '${user_id}'`
+      `SELECT * FROM todos where user_id = '${user_id}' order by task_id ASC`
     );
     return result.rows;
   } catch (error) {
@@ -52,12 +52,27 @@ export async function updateTodoSql(id, text, date) {
   }
 }
 
-export async function updateCompleteSql(id, complete) {
+export async function updateCompleteSql(id, completed) {
   const connected = await pool.connect();
 
   try {
     return await connected.query(
-      `UPDATE todos SET complete=${complete} WHERE task_id =${id}`
+      `UPDATE todos SET completed=${completed} WHERE task_id =${id}`
+    );
+  } catch (error) {
+    console.log("error querying: " + error);
+    return;
+  } finally {
+    connected.release();
+  }
+}
+
+export async function updateEditingTodoSql(id, isEditing) {
+  const connected = await pool.connect();
+
+  try {
+    return await connected.query(
+      `UPDATE todos SET isEditing=${isEditing} WHERE task_id =${id}`
     );
   } catch (error) {
     console.log("error querying: " + error);

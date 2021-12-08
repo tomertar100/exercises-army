@@ -9,13 +9,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteTodoSql = exports.updateCompleteSql = exports.updateTodoSql = exports.addTodoSql = exports.getAllTodosSql = void 0;
+exports.deleteTodoSql = exports.updateEditingTodoSql = exports.updateCompleteSql = exports.updateTodoSql = exports.addTodoSql = exports.getAllTodosSql = void 0;
 const connections_1 = require("./connections");
 function getAllTodosSql(user_id) {
     return __awaiter(this, void 0, void 0, function* () {
         const connected = yield connections_1.pool.connect();
         try {
-            const result = yield connected.query(`SELECT * FROM todos where user_id = '${user_id}'`);
+            const result = yield connected.query(`SELECT * FROM todos where user_id = '${user_id}' order by task_id ASC`);
             return result.rows;
         }
         catch (error) {
@@ -59,11 +59,11 @@ function updateTodoSql(id, text, date) {
     });
 }
 exports.updateTodoSql = updateTodoSql;
-function updateCompleteSql(id, complete) {
+function updateCompleteSql(id, completed) {
     return __awaiter(this, void 0, void 0, function* () {
         const connected = yield connections_1.pool.connect();
         try {
-            return yield connected.query(`UPDATE todos SET complete=${complete} WHERE task_id =${id}`);
+            return yield connected.query(`UPDATE todos SET completed=${completed} WHERE task_id =${id}`);
         }
         catch (error) {
             console.log("error querying: " + error);
@@ -75,6 +75,22 @@ function updateCompleteSql(id, complete) {
     });
 }
 exports.updateCompleteSql = updateCompleteSql;
+function updateEditingTodoSql(id, isEditing) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const connected = yield connections_1.pool.connect();
+        try {
+            return yield connected.query(`UPDATE todos SET isEditing=${isEditing} WHERE task_id =${id}`);
+        }
+        catch (error) {
+            console.log("error querying: " + error);
+            return;
+        }
+        finally {
+            connected.release();
+        }
+    });
+}
+exports.updateEditingTodoSql = updateEditingTodoSql;
 function deleteTodoSql(id) {
     return __awaiter(this, void 0, void 0, function* () {
         const connected = yield connections_1.pool.connect();

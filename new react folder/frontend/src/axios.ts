@@ -158,7 +158,7 @@ export const deleteTodo = async (id: string | null, token: string | null) => {
         "Content-Type": "application/json",
       },
     })
-    .then((res) => console.log(res))
+    .then((res) => res)
     .catch(errorHandling);
 };
 
@@ -176,7 +176,47 @@ export const updateTodo = async (
   });
 
   return await axios
-    .put(serverUrl + `todoapp/updatetodo/${id}`, data, {
+    .patch(serverUrl + `todoapp/updatetodo/${id}`, data, {
+      headers: {
+        authorization: `bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    })
+    .then((res) => console.log(res))
+    .catch(errorHandling);
+};
+
+export const updateCompleteField = async (
+  id: string | null,
+  completed: boolean,
+  token: string | null
+) => {
+  const data = JSON.stringify({
+    completed: completed,
+  });
+
+  return await axios
+    .patch(serverUrl + `todoapp/updatecomplete/${id}`, data, {
+      headers: {
+        authorization: `bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    })
+    .then((res) => console.log(res))
+    .catch(errorHandling);
+};
+
+export const updateEditingField = async (
+  id: string | null,
+  isEditing: boolean,
+  token: string | null
+) => {
+  const data = JSON.stringify({
+    isEditing: isEditing,
+  });
+
+  return await axios
+    .patch(serverUrl + `todoapp/updateediting/${id}`, data, {
       headers: {
         authorization: `bearer ${token}`,
         "Content-Type": "application/json",

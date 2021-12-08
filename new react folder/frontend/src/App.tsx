@@ -15,7 +15,7 @@ export type Todo = {
   date: string;
   completed: boolean;
   overdue: boolean;
-  isEditing: boolean;
+  isediting: boolean;
 };
 
 function App() {
@@ -29,7 +29,7 @@ function App() {
       case "completed":
         setFilteredTodos(todos.filter((todo) => todo.completed === true));
         break;
-      case "uncompleted":
+      case "incomplete":
         setFilteredTodos(todos.filter((todo) => todo.completed === false));
         break;
       case "overdue":

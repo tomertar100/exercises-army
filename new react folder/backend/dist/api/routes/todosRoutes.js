@@ -43,6 +43,12 @@ todosRouter.patch("/updatecomplete/:id", (req, res) => __awaiter(void 0, void 0,
     yield (0, todosActions_1.updateComplete)(id, completed);
     res.json("todo complete field updated");
 }));
+todosRouter.patch("/updateediting/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const id = req.params.id;
+    const isEditing = req.body.isEditing;
+    yield (0, todosActions_1.updateEditingTodo)(id, isEditing);
+    res.json("todo isEditing field updated");
+}));
 todosRouter.delete("/deletetodo/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const id = req.params.id;
     yield (0, todosActions_1.deleteTodo)(id);

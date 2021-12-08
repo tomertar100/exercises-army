@@ -5,6 +5,7 @@ import {
   updateTodo,
   updateComplete,
   deleteTodo,
+  updateEditingTodo,
 } from "../actions/todosActions";
 
 const todosRouter = express.Router();
@@ -42,6 +43,14 @@ todosRouter.patch("/updatecomplete/:id", async (req, res) => {
 
   await updateComplete(id, completed);
   res.json("todo complete field updated");
+});
+
+todosRouter.patch("/updateediting/:id", async (req, res) => {
+  const id = req.params.id;
+  const isEditing = req.body.isEditing;
+
+  await updateEditingTodo(id, isEditing);
+  res.json("todo isEditing field updated");
 });
 
 todosRouter.delete("/deletetodo/:id", async (req, res) => {

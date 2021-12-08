@@ -42,12 +42,10 @@ const Form = ({
     date: "",
     completed: false,
     overdue: false,
-    isEditing: false,
+    isediting: false,
   };
 
-  const [newTask, setNewTask] = useState(intialNewTaskState);
-
-  useEffect(() => console.log("new Task: ", newTask), [newTask]);
+  const [newTask, setNewTask] = useState<Todo>(intialNewTaskState);
 
   const handleSubmitTodo = async (e: any) => {
     e.preventDefault();
@@ -59,8 +57,6 @@ const Form = ({
       return;
     }
 
-    console.log("sending data");
-
     await createTodo(
       newTask.task_id,
       newTask.user_id,
@@ -68,11 +64,9 @@ const Form = ({
       newTask.date,
       newTask.completed,
       newTask.overdue,
-      newTask.isEditing,
+      newTask.isediting,
       token
     );
-
-    console.log("data sent");
 
     await retrieveTodos();
   };
@@ -113,7 +107,7 @@ const Form = ({
       <select onChange={(e: any) => setStatus(e.target.value)}>
         <option value="all">All</option>
         <option value="completed">Completed</option>
-        <option value="uncompleted">Uncompleted</option>
+        <option value="incomplete">Incomplete</option>
         <option value="overdue">Overdue</option>
       </select>
     </form>

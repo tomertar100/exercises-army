@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteTodo = exports.updateComplete = exports.updateTodo = exports.addTodo = exports.getAllTodos = void 0;
+exports.deleteTodo = exports.updateEditingTodo = exports.updateComplete = exports.updateTodo = exports.addTodo = exports.getAllTodos = void 0;
 const todosActionsSql_1 = require("../../sql/todosActionsSql");
 function getAllTodos(user_id) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -29,12 +29,18 @@ function updateTodo(id, text, date) {
     });
 }
 exports.updateTodo = updateTodo;
-function updateComplete(id, complete) {
+function updateComplete(id, completed) {
     return __awaiter(this, void 0, void 0, function* () {
-        return yield (0, todosActionsSql_1.updateCompleteSql)(id, complete);
+        return yield (0, todosActionsSql_1.updateCompleteSql)(id, completed);
     });
 }
 exports.updateComplete = updateComplete;
+function updateEditingTodo(id, isEditing) {
+    return __awaiter(this, void 0, void 0, function* () {
+        return yield (0, todosActionsSql_1.updateEditingTodoSql)(id, isEditing);
+    });
+}
+exports.updateEditingTodo = updateEditingTodo;
 function deleteTodo(id) {
     return __awaiter(this, void 0, void 0, function* () {
         return yield (0, todosActionsSql_1.deleteTodoSql)(id);

@@ -67,12 +67,18 @@ const LoginPage = () => {
         <button onClick={onRegisterClick}>Register</button>
       )}
 
-      <button className="loginform-button" onClick={() => setIsitLogin(true)}>
-        login
-      </button>
-      <button className="loginform-button" onClick={() => setIsitLogin(false)}>
-        register
-      </button>
+      {!isItLogin ? (
+        <button className="loginform-button" onClick={() => setIsitLogin(true)}>
+          already have an account? Login
+        </button>
+      ) : (
+        <button
+          className="loginform-button"
+          onClick={() => setIsitLogin(false)}
+        >
+          dont have account? Register
+        </button>
+      )}
     </div>
   );
 };
