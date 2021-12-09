@@ -11,6 +11,7 @@ type TodoListProps = {
   setCurrentTime: React.Dispatch<React.SetStateAction<Date>>;
   currentTime: Date;
   setFilteredTodos: React.Dispatch<React.SetStateAction<Todo[]>>;
+  setStatus: React.Dispatch<React.SetStateAction<string>>;
 };
 
 const TodoList = ({
@@ -20,6 +21,7 @@ const TodoList = ({
   setCurrentTime,
   currentTime,
   setFilteredTodos,
+  setStatus,
 }: TodoListProps) => {
   useEffect(
     () => console.log("ToDoList filteredTodos: ", filteredTodos),
@@ -28,6 +30,26 @@ const TodoList = ({
 
   return (
     <div className="todo-container">
+      <div className="tab">
+        <button
+          value="incomplete"
+          onClick={(e: any) => setStatus(e.target.value)}
+        >
+          Incomplete
+        </button>
+        <button
+          value="completed"
+          onClick={(e: any) => setStatus(e.target.value)}
+        >
+          Completed
+        </button>
+        <button value="overdue" onClick={(e: any) => setStatus(e.target.value)}>
+          Overdue
+        </button>
+        <button value="all" onClick={(e: any) => setStatus(e.target.value)}>
+          All
+        </button>
+      </div>
       <ul className="todo">
         {filteredTodos.map((todo) => (
           <TodoItem

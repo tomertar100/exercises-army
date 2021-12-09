@@ -15,7 +15,7 @@ function getAllTodosSql(user_id) {
     return __awaiter(this, void 0, void 0, function* () {
         const connected = yield connections_1.pool.connect();
         try {
-            const result = yield connected.query(`SELECT * FROM todos where user_id = '${user_id}' order by task_id ASC`);
+            const result = yield connected.query(`SELECT * FROM todos where user_id = '${user_id}' order by date ASC`);
             return result.rows;
         }
         catch (error) {

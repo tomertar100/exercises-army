@@ -29,14 +29,14 @@ function App() {
       case "completed":
         setFilteredTodos(todos.filter((todo) => todo.completed === true));
         break;
-      case "incomplete":
-        setFilteredTodos(todos.filter((todo) => todo.completed === false));
+      case "all":
+        setFilteredTodos(todos);
         break;
       case "overdue":
         setFilteredTodos(todos.filter((todo) => todo.overdue === true));
         break;
       default:
-        setFilteredTodos(todos);
+        setFilteredTodos(todos.filter((todo) => todo.completed === false));
         break;
     }
   };
@@ -71,8 +71,6 @@ function App() {
 
   return (
     <div className="App">
-      <h1>ToDo's</h1>
-
       <Form
         todos={todos}
         setTodos={setTodos}
@@ -87,6 +85,7 @@ function App() {
         setTodos={setTodos}
         todos={todos}
         setFilteredTodos={setFilteredTodos}
+        setStatus={setStatus}
       />
     </div>
   );

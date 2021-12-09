@@ -72,11 +72,13 @@ const Form = ({
   };
 
   return (
-    <form>
+    <form className="form">
+      <label htmlFor="inputText">Task Name:</label>
       <input
-        placeholder="Enter A Todo"
+        id="inputText"
+        placeholder="Type here..."
         type="text"
-        className="todo-input"
+        className="todo-text-input"
         onChange={(e: any) => {
           setNewTask({
             ...newTask,
@@ -86,7 +88,9 @@ const Form = ({
         }}
         value={newTask.text}
       />
+      <label htmlFor="inputDate">Task Name:</label>
       <input
+        id="inputDate"
         type="date"
         className="todo-date-input"
         onChange={(e: any) => {
@@ -103,13 +107,6 @@ const Form = ({
       <button onClick={handleSubmitTodo} type="submit" className="todo-button">
         <i>Add</i>
       </button>
-
-      <select onChange={(e: any) => setStatus(e.target.value)}>
-        <option value="all">All</option>
-        <option value="completed">Completed</option>
-        <option value="incomplete">Incomplete</option>
-        <option value="overdue">Overdue</option>
-      </select>
     </form>
   );
 };

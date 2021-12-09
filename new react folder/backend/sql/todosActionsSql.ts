@@ -5,7 +5,7 @@ export async function getAllTodosSql(user_id) {
 
   try {
     const result = await connected.query(
-      `SELECT * FROM todos where user_id = '${user_id}' order by task_id ASC`
+      `SELECT * FROM todos where user_id = '${user_id}' order by date ASC`
     );
     return result.rows;
   } catch (error) {
