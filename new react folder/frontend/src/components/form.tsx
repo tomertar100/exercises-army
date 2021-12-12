@@ -73,40 +73,49 @@ const Form = ({
 
   return (
     <form className="form">
-      <label htmlFor="inputText">Task Name:</label>
-      <input
-        id="inputText"
-        placeholder="Type here..."
-        type="text"
-        className="todo-text-input"
-        onChange={(e: any) => {
-          setNewTask({
-            ...newTask,
-            text: e.target.value,
-            task_id: generateRandomId(),
-          });
-        }}
-        value={newTask.text}
-      />
-      <label htmlFor="inputDate">Task Name:</label>
-      <input
-        id="inputDate"
-        type="date"
-        className="todo-date-input"
-        onChange={(e: any) => {
-          setNewTask({
-            ...newTask,
-            date: e.target.value,
-            task_id: generateRandomId(),
-          });
-          console.log("new task date change: ", newTask);
-        }}
-        value={newTask.date}
-      />
-
-      <button onClick={handleSubmitTodo} type="submit" className="todo-button">
-        <i>Add</i>
-      </button>
+      <div className="labelInputText">
+        <label htmlFor="inputText">TASK NAME:</label>
+        <input
+          id="inputText"
+          placeholder="Type here..."
+          type="text"
+          className="todo-text-input"
+          onChange={(e: any) => {
+            setNewTask({
+              ...newTask,
+              text: e.target.value,
+              task_id: generateRandomId(),
+            });
+          }}
+          value={newTask.text}
+        />
+      </div>
+      <div className="labelInputDate">
+        <label htmlFor="inputDate">DUE DATE:</label>
+        <input
+          id="inputDate"
+          type="date"
+          className="todo-date-input"
+          onChange={(e: any) => {
+            setNewTask({
+              ...newTask,
+              date: e.target.value,
+              task_id: generateRandomId(),
+            });
+            console.log("new task date change: ", newTask);
+          }}
+          value={newTask.date}
+        />
+      </div>
+      <div className="todo-button-div">
+        <button
+          onClick={handleSubmitTodo}
+          type="submit"
+          className="todo-button"
+        >
+          <i>New Task</i>
+        </button>
+      </div>
     </form>
   );
 };

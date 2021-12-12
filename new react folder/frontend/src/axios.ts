@@ -1,4 +1,5 @@
 import axios from "axios";
+import { User } from "../src/components/login";
 import { Todo } from "../src/App";
 
 type LoginToServer = (username: string, password: string) => any;
@@ -38,10 +39,11 @@ export const setSessionStorageToken = (jwt: string) => {
 };
 
 export const loginToServer: LoginToServer = async (username, password) => {
-  const data = JSON.stringify({
+  const user: User = {
     username: username,
     password: password,
-  });
+  };
+  const data = JSON.stringify(user);
   return await axios
     .post(serverUrl + "login", data, {
       headers: {
@@ -59,11 +61,11 @@ export const registerToServer: registerToServer = async (
   username,
   password
 ) => {
-  const data = JSON.stringify({
+  const user: User = {
     username: username,
     password: password,
-  });
-
+  };
+  const data = JSON.stringify(user);
   return await axios
     .post(serverUrl + "register", data, {
       headers: {

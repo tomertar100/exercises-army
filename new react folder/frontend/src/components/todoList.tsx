@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 //importing more components
 import TodoItem from "./todo";
 import { Todo } from "../App";
@@ -28,29 +28,57 @@ const TodoList = ({
     [filteredTodos]
   );
 
+  const [currentTabClass, setCurrentTabClass] = useState("incomplete");
+
+  // useEffect(()=>{
+  //   const classNa
+  // },[])
+
   return (
     <div className="todo-container">
       <div className="tab">
         <button
+          className={"todo-button1 " + currentTabClass}
           value="incomplete"
-          onClick={(e: any) => setStatus(e.target.value)}
+          onClick={(e: any) => {
+            setStatus(e.target.value);
+            setCurrentTabClass("incomplete");
+          }}
         >
-          Incomplete
+          INCOMPLETE
         </button>
         <button
+          className={"todo-button2 " + currentTabClass}
           value="completed"
-          onClick={(e: any) => setStatus(e.target.value)}
+          onClick={(e: any) => {
+            setStatus(e.target.value);
+            setCurrentTabClass("completed");
+          }}
         >
-          Completed
+          COMPLETED
         </button>
-        <button value="overdue" onClick={(e: any) => setStatus(e.target.value)}>
-          Overdue
+        <button
+          className={"todo-button3 " + currentTabClass}
+          value="overdue"
+          onClick={(e: any) => {
+            setStatus(e.target.value);
+            setCurrentTabClass("overdue");
+          }}
+        >
+          OVERDUE
         </button>
-        <button value="all" onClick={(e: any) => setStatus(e.target.value)}>
-          All
+        <button
+          className={"todo-button4 " + currentTabClass}
+          value="all"
+          onClick={(e: any) => {
+            setStatus(e.target.value);
+            setCurrentTabClass("all");
+          }}
+        >
+          ALL
         </button>
       </div>
-      <ul className="todo">
+      <ul>
         {filteredTodos.map((todo) => (
           <TodoItem
             currentTime={currentTime}

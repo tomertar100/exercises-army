@@ -7,6 +7,8 @@ import {
   updateEditingField,
   updateTodo,
 } from "../axios";
+import { MdDelete } from "react-icons/md";
+import { FiEdit } from "react-icons/fi";
 //types
 
 type todoItemProps = {
@@ -90,68 +92,64 @@ const TodoItem = ({
     await updateTodo(todo.task_id, editText, editDate, token);
     toggleEdit();
     await retrieveTodos();
-    // setTodos(
-    //   todos.map((item) => {
-    //     if (item.task_id === todo.task_id) {
-    //       if (!editText || /^\s*$/.test(editText)) {
-    //         return item;
-    //       }
-    //       if (editDate === null || editDate === "") {
-    //         return item;
-    //       }
-    //       todo.text = editText;
-    //       todo.date = editDate;
-    //       return { ...item, isEditing: false };
-    //     }
-    //     return item;
-    //   })
-    // );
+
     setEditText("");
     setEditDate("");
   };
 
   return (
-    <div className="todo">
+    <div>
       <li key={todo.task_id} className="todo-item">
         {!todo.isediting ? (
-          <p id="text">{text}</p>
+          <input
+            type="checkbox"
+            onClick={toggleComplete}
+            className="complete-button"
+          />
+        ) : null}
+
+        {!todo.isediting ? (
+          <p id="text" className="todo-text">
+            {text}
+          </p>
         ) : (
           <input
+            className="edit-text-input"
             type="text"
             placeholder="Update A Todo"
             onChange={(e: any) => setEditText(e.target.value)}
           />
         )}
         {!todo.isediting ? (
-          <p id="date">due: {date}</p>
+          <p id="date" className="todo-date">
+            {"due:        " + date}
+          </p>
         ) : (
           <input
+            className="edit-date-input"
             type="date"
             onChange={(e: any) => setEditDate(e.target.value)}
           />
         )}
+
+        {!todo.isediting ? (
+          <button className="edit-button" onClick={toggleEdit}>
+            <FiEdit />
+          </button>
+        ) : (
+          <button onClick={handleEdit}>update</button>
+        )}
+
+        {/* // <button className="cancel-button" onClick={toggleEdit}>
+          //   cancel
+          // </button> */}
+
+        {!todo.isediting ? (
+          <button onClick={handleDelete} className="delete-button">
+            <MdDelete />
+          </button>
+        ) : null}
       </li>
-      {!todo.isediting ? (
-        <button className="edit-button" onClick={toggleEdit}>
-          edit
-        </button>
-      ) : (
-        <button onClick={handleEdit}>update</button>
-      )}
-      {!todo.isediting ? (
-        <button onClick={toggleComplete} className="complete-button">
-          complete
-        </button>
-      ) : (
-        <button className="cancel-button" onClick={toggleEdit}>
-          cancel
-        </button>
-      )}
-      {!todo.isediting ? (
-        <button onClick={handleDelete} className="delete-button">
-          delete
-        </button>
-      ) : null}
     </div>
   );
 };

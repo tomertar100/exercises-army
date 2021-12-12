@@ -5,33 +5,214 @@ body {
   align-items: space-between;
   align-content: center;
   justify-content: center;
+  background-color: #caf4ff;
+  font-family: "Noto Sans Display", sans-serif;
+  font-weight: bold;
+  font-size: 12px;
 }
 
 .App {
-  width: 480px;
-  height: 460px;
+  width: 550px;
+  height: 470px;
+  margin-top: 50px;
 }
 
 .form {
+  align-content: space-between;
+  background-color: #eff7fb;
   display: flex;
-  flex-wrap: wrap-reverse;
+  height: 60px;
   margin-bottom: 25px;
-  align-self: center;
-  border: 2px solid grey;
+  /* border: 2px solid grey; */
+  align-items: center;
+  border-radius: 7px;
+  box-shadow: -8px 5px 8px 0px rgba(140, 140, 140, 0.6);
 }
 
 .todo-container {
+  /* color of containers */
+  background-color: #eff7fb;
   height: 400px;
-  border: 2px solid grey;
+  /* border: 2px solid grey; */
   overflow-y: scroll;
+  box-shadow: -8px 5px 8px 0px rgba(140, 140, 140, 0.6);
+  border-radius: 7px;
 }
 .tab {
   margin-top: 15px;
-  margin-bottom: 5px;
+  margin-bottom: 20px;
   display: flex;
   justify-content: space-evenly;
+  align-items: center;
+}
+
+.tab > button {
+  padding: 5px 10px;
+  width: fit-content;
+  height: 20px;
+  background-color: #eff7fb;
+  font-size: 12px;
+  outline: none;
+  border: none;
+  /* color of background button color */
+  border: none;
+  color: #1d669b;
+  height: 20px;
+  transition: 0.3;
+  /* box-shadow: -5px 5px 4px -4px rgba(181, 181, 181, 0.6); */
+  cursor: pointer;
+  border-radius: 3px;
+  font-style: normal;
+}
+
+.tab > button:hover {
+  background-color: rgb(221, 221, 221);
+}
+
+.tab > button.todo-button1.incomplete {
+  box-shadow: -5px 5px 4px -4px rgba(181, 181, 181, 0.6);
+  background-color: #a0e1f4;
+}
+.tab > button.todo-button2.completed {
+  box-shadow: -5px 5px 4px -4px rgba(181, 181, 181, 0.6);
+  background-color: #a0e1f4;
+}
+.tab > button.todo-button3.overdue {
+  box-shadow: -5px 5px 4px -4px rgba(181, 181, 181, 0.6);
+  background-color: #a0e1f4;
+}
+.tab > button.todo-button4.all {
+  box-shadow: -5px 5px 4px -4px rgba(181, 181, 181, 0.6);
+  background-color: #a0e1f4;
+}
+
+.form > label,
+.form > input {
+  display: block;
 }
 
 .form > label {
-  display: block;
+  /* all text color */
+  color: #1d669b;
+}
+
+.todo-text-input,
+.todo-date-input {
+  border: none;
+  height: 50%;
+  width: 170px;
+  margin-top: 2px;
+  border-radius: 5px;
+  box-shadow: inset -5px 7px 4px -4px rgba(181, 181, 181, 0.6);
+}
+
+.todo-text-input {
+  padding-top: 3px;
+  padding-bottom: 3px;
+  padding-left: 10px;
+}
+
+.todo-date-input {
+  padding-right: 15px;
+}
+
+.todo-date-input::placeholder {
+  opacity: 0.5;
+}
+
+.labelInputText {
+  margin-right: 10px;
+}
+
+.labelInputText,
+.labelInputDate {
+  float: left;
+  width: 190px;
+  color: #1d669b;
+}
+
+.labelInputText {
+  margin-left: 10px;
+}
+
+.todo-button {
+  margin-left: 15px;
+  padding: 4px;
+  width: 100px;
+  vertical-align: middle;
+  font-size: 13px;
+  outline: none;
+  border: none;
+  /* color of background button color */
+  background-color: #a0e1f4;
+  color: #1d669b;
+  height: 20px;
+  box-shadow: -5px 5px 4px -4px rgba(181, 181, 181, 0.6);
+  border-radius: 3px;
+
+  cursor: pointer;
+}
+
+.todo-button:hover {
+  background-color: #44c7ee;
+}
+
+.todo-button-div {
+  margin-left: 5px;
+  margin-right: 5px;
+  display: flex;
+  align-items: flex-end;
+  height: 42px;
+}
+
+.todo-item {
+  box-shadow: -8px 5px 8px 0px rgba(140, 140, 140, 0.6);
+  height: auto;
+  font-weight: bolder;
+  grid-template-columns: 10% auto 30% 8% 8%;
+  font-size: 14px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  border-radius: 3px;
+  /* border: 1px solid black; */
+  display: grid;
+  width: 98%;
+  padding: 0;
+  background-color: white;
+}
+.complete-button {
+  margin-top: 20%;
+  margin-left: 25%;
+}
+
+.edit-button,
+.delete-button {
+  cursor: pointer;
+  padding: 0;
+  outline: 0;
+  border: none;
+  background-color: white;
+}
+
+.edit-button:hover,
+.delete-button:hover {
+  background-color: rgb(191, 187, 187);
+}
+
+.edit-button:active,
+.delete-button:active {
+  background-color: rgb(135, 134, 134);
+}
+
+.todo-item > p {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.todo-text {
+  display: inline;
+}
+
+.todo-date {
+  display: inline;
 }

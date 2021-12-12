@@ -5,6 +5,11 @@ import axios, {
   registerToServer,
 } from "../axios";
 
+export type User = {
+  username: string;
+  password: string;
+};
+
 const LoginPage = () => {
   const [isItLogin, setIsitLogin] = useState<boolean>(true);
 
@@ -48,6 +53,7 @@ const LoginPage = () => {
     <div className="login">
       {isItLogin ? <h1>Login</h1> : <h1>Register</h1>}
       <input
+        className="username-input"
         type="text"
         placeholder="username"
         onChange={(e) => setUsername(e.target.value)}
@@ -62,9 +68,14 @@ const LoginPage = () => {
       />
 
       {isItLogin ? (
-        <button onClick={onLoginClick}> Login</button>
+        <button className="submit-login-button" onClick={onLoginClick}>
+          {" "}
+          Login
+        </button>
       ) : (
-        <button onClick={onRegisterClick}>Register</button>
+        <button className="submit-login-button" onClick={onRegisterClick}>
+          Register
+        </button>
       )}
 
       {!isItLogin ? (
