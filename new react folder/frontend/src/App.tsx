@@ -52,6 +52,11 @@ function App() {
     });
   };
 
+  const onClikcLogout = () => {
+    sessionStorage.clear();
+    window.location.href = "/";
+  };
+
   useEffect(() => {
     retrieveTodos();
   }, []);
@@ -70,23 +75,29 @@ function App() {
   }, [todos, status]);
 
   return (
-    <div className="App">
-      <Form
-        todos={todos}
-        setTodos={setTodos}
-        status={status}
-        setStatus={setStatus}
-        setFilteredTodos={setFilteredTodos}
-      />
-      <TodoList
-        setCurrentTime={setCurrentTime}
-        currentTime={currentTime}
-        filteredTodos={filteredTodos}
-        setTodos={setTodos}
-        todos={todos}
-        setFilteredTodos={setFilteredTodos}
-        setStatus={setStatus}
-      />
+    <div>
+      <h1 className="user-title">To Do</h1>
+      <button className="logout-button" onClick={onClikcLogout}>
+        Logout
+      </button>
+      <div className="App">
+        <Form
+          todos={todos}
+          setTodos={setTodos}
+          status={status}
+          setStatus={setStatus}
+          setFilteredTodos={setFilteredTodos}
+        />
+        <TodoList
+          setCurrentTime={setCurrentTime}
+          currentTime={currentTime}
+          filteredTodos={filteredTodos}
+          setTodos={setTodos}
+          todos={todos}
+          setFilteredTodos={setFilteredTodos}
+          setStatus={setStatus}
+        />
+      </div>
     </div>
   );
 }

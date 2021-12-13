@@ -87,7 +87,7 @@ const LoginPage = () => {
           className="loginform-button"
           onClick={() => setIsitLogin(false)}
         >
-          dont have account? Register
+          dont have an account? Register
         </button>
       )}
     </div>

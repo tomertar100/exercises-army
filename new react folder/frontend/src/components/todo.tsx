@@ -7,8 +7,10 @@ import {
   updateEditingField,
   updateTodo,
 } from "../axios";
-import { MdDelete } from "react-icons/md";
+import classnames from "classnames";
+import { MdDelete, MdCancel } from "react-icons/md";
 import { FiEdit } from "react-icons/fi";
+import { AiOutlineCheckCircle } from "react-icons/ai";
 //types
 
 type todoItemProps = {
@@ -21,10 +23,6 @@ type todoItemProps = {
   setFilteredTodos: React.Dispatch<React.SetStateAction<Todo[]>>;
 };
 
-type UpdatedTask = {
-  text: string;
-  date: string;
-};
 const TodoItem = ({
   text,
   date,
@@ -39,18 +37,12 @@ const TodoItem = ({
   const user_id = sessionStorage.getItem("user_id");
   const token = sessionStorage.getItem("JWT");
 
-  const InitialUpdatedTask: UpdatedTask = {
-    text: "",
-    date: "",
-  };
-
   //states
 
-  const [editText, setEditText] = useState("");
-  const [editDate, setEditDate] = useState("");
-
-  const [updatedTask, setUpdatedTask] =
-    useState<UpdatedTask>(InitialUpdatedTask);
+  const [editText, setEditText] = useState<string>(todo.text);
+  const [editDate, setEditDate] = useState<string>(todo.date);
+  // const [isOverDue, setIsOverDue] = useState<boolean>(false);
+  // const [isCompleted, setIsCompleted] = useState<boolean>();
 
   //functions
 
@@ -70,7 +62,22 @@ const TodoItem = ({
     } else {
       todo.overdue = false;
     }
-  }, [currentTime]);
+  }, [currentTime, todos]);
+
+  // const filteredClass = () => {
+  //   let result;
+
+  //   if (isCompleted) {
+  //     result = "completedClass";
+  //   } else if (isOverDue && !isCompleted) {
+  //     result = "overdueClass";
+  //   } else if (!isOverDue && isCompleted) {
+  //     result = "completedClass";
+  //   } else {
+  //     result = "";
+  //   }
+  //   return result;
+  // };
 
   const handleDelete = async () => {
     await deleteTodo(todo.task_id, token);
@@ -89,24 +96,45 @@ const TodoItem = ({
   };
 
   const handleEdit = async () => {
+    if (!editText || /^\s*$/.test(editText)) {
+      return;
+    }
+
+    if (editDate === null || editDate === "") {
+      return;
+    }
     await updateTodo(todo.task_id, editText, editDate, token);
     toggleEdit();
     await retrieveTodos();
 
-    setEditText("");
-    setEditDate("");
+    setEditText(todo.text);
+    setEditDate(todo.date);
   };
+
+  const todoClasses = classnames({
+    "todo-item": true,
+    completedClass: todo.completed,
+    overdueClass: todo.overdue,
+  });
 
   return (
     <div>
-      <li key={todo.task_id} className="todo-item">
+      <li key={todo.task_id} className={todoClasses}>
         {!todo.isediting ? (
           <input
+            checked={todo.completed}
             type="checkbox"
             onClick={toggleComplete}
             className="complete-button"
           />
-        ) : null}
+        ) : (
+          <input
+            type="checkbox"
+            checked={false}
+            disabled={true}
+            className="complete-button"
+          />
+        )}
 
         {!todo.isediting ? (
           <p id="text" className="todo-text">
@@ -114,9 +142,11 @@ const TodoItem = ({
           </p>
         ) : (
           <input
+            defaultValue={todo.text}
+            maxLength={22}
             className="edit-text-input"
             type="text"
-            placeholder="Update A Todo"
+            placeholder="Upadte text here..."
             onChange={(e: any) => setEditText(e.target.value)}
           />
         )}
@@ -126,6 +156,7 @@ const TodoItem = ({
           </p>
         ) : (
           <input
+            defaultValue={todo.date}
             className="edit-date-input"
             type="date"
             onChange={(e: any) => setEditDate(e.target.value)}
@@ -137,18 +168,20 @@ const TodoItem = ({
             <FiEdit />
           </button>
         ) : (
-          <button onClick={handleEdit}>update</button>
+          <button className="update-button" onClick={handleEdit}>
+            <AiOutlineCheckCircle />
+          </button>
         )}
-
-        {/* // <button className="cancel-button" onClick={toggleEdit}>
-          //   cancel
-          // </button> */}
 
         {!todo.isediting ? (
           <button onClick={handleDelete} className="delete-button">
             <MdDelete />
           </button>
-        ) : null}
+        ) : (
+          <button onClick={toggleEdit} className="cancel-button">
+            <MdCancel />
+          </button>
+        )}
       </li>
     </div>
   );

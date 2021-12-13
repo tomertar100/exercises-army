@@ -76,6 +76,7 @@ const Form = ({
       <div className="labelInputText">
         <label htmlFor="inputText">TASK NAME:</label>
         <input
+          maxLength={22}
           id="inputText"
           placeholder="Type here..."
           type="text"

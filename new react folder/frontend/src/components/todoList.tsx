@@ -28,7 +28,7 @@ const TodoList = ({
     [filteredTodos]
   );
 
-  const [currentTabClass, setCurrentTabClass] = useState("incomplete");
+  const [currentTabClass, setCurrentTabClass] = useState("all");
 
   // useEffect(()=>{
   //   const classNa

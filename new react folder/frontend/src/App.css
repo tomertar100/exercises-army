@@ -14,7 +14,40 @@ body {
 .App {
   width: 550px;
   height: 470px;
-  margin-top: 50px;
+  margin-top: 20px;
+}
+.user-title {
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: #1d669b;
+  margin-top: 20px;
+  margin-left: 30px;
+  font-size: 30px;
+}
+
+.logout-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-top: 15px;
+  margin-right: 20px;
+  font-weight: bold;
+  outline: none;
+  border: none;
+  font-size: 12px;
+  height: 40px;
+  width: 80px;
+  background-color: #a0e1f4;
+  color: #1d669b;
+  box-shadow: -5px 5px 4px -4px rgba(181, 181, 181, 0.6);
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.logout-button:hover {
+  background-color: #44c7ee;
+  color: white;
 }
 
 .form {
@@ -154,6 +187,7 @@ body {
 }
 
 .todo-button:hover {
+  color: white;
   background-color: #44c7ee;
 }
 
@@ -167,9 +201,9 @@ body {
 
 .todo-item {
   box-shadow: -8px 5px 8px 0px rgba(140, 140, 140, 0.6);
-  height: auto;
+  height: 40px;
   font-weight: bolder;
-  grid-template-columns: 10% auto 30% 8% 8%;
+  grid-template-columns: 10% auto 30% 6% 6%;
   font-size: 14px;
   margin-top: 5px;
   margin-bottom: 10px;
@@ -181,12 +215,14 @@ body {
   background-color: white;
 }
 .complete-button {
-  margin-top: 20%;
+  margin-top: 25%;
   margin-left: 25%;
 }
 
 .edit-button,
-.delete-button {
+.delete-button,
+.cancel-button,
+.update-button {
   cursor: pointer;
   padding: 0;
   outline: 0;
@@ -195,17 +231,21 @@ body {
 }
 
 .edit-button:hover,
-.delete-button:hover {
+.delete-button:hover,
+.cancel-button:hover,
+.update-button:hover {
   background-color: rgb(191, 187, 187);
 }
 
 .edit-button:active,
-.delete-button:active {
+.delete-button:active,
+.cancel-button:active,
+.update-button:active {
   background-color: rgb(135, 134, 134);
 }
 
 .todo-item > p {
-  margin-top: 5px;
+  margin-top: 8px;
   margin-bottom: 5px;
 }
 
@@ -215,4 +255,34 @@ body {
 
 .todo-date {
   display: inline;
+}
+
+.edit-text-input,
+.edit-date-input {
+  border: none;
+  height: 70%;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  border-radius: 5px;
+  box-shadow: inset -5px 7px 4px -4px rgba(181, 181, 181, 0.6);
+}
+
+.edit-text-input {
+  width: 190;
+  padding-left: 5px;
+  margin-right: 10px;
+}
+
+.edit-date-input {
+  margin-right: 5px;
+  padding-right: 5px;
+}
+
+.completedClass {
+  background-color: rgb(165, 165, 165) !important;
+  text-decoration: line-through !important;
+}
+
+.overdueClass {
+  background-color: rgb(252, 115, 115);
 }

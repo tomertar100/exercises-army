@@ -47,7 +47,7 @@
 .submit-login-button {
   font-weight: bolder;
   outline: none;
-  border: none;
+  border: 2px solid rgba(255, 255, 255, 0.487);
   font-size: 14px;
   height: 40px;
   width: 80px;
@@ -60,4 +60,5 @@
 
 .submit-login-button:hover {
   background-color: #44c7ee;
+  color: white;
 }
