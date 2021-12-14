@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
 import { getTodos } from "./axios";
 
@@ -19,11 +19,6 @@ export type Todo = {
 };
 
 function App() {
-  const [todos, setTodos] = useState<Todo[]>([]);
-  const [status, setStatus] = useState<string>("all");
-  const [filteredTodos, setFilteredTodos] = useState<Todo[]>([]);
-  const [currentTime, setCurrentTime] = useState<Date>(new Date());
-
   const filterHandle = () => {
     switch (status) {
       case "completed":
@@ -41,21 +36,13 @@ function App() {
     }
   };
 
-  const retrieveTodos = () => {
-    const token = sessionStorage.getItem("JWT");
-    const user_id = sessionStorage.getItem("user_id");
-    getTodos(user_id, token).then((res) => {
-      setFilteredTodos(res);
-      setTodos(res);
-      console.log("fetching response: ", res);
-      console.log("todos after fetching: ", todos);
-    });
-  };
+  //states
+  const [todos, setTodos] = useState<Todo[]>([]);
+  const [status, setStatus] = useState<string>("all");
+  const [filteredTodos, setFilteredTodos] = useState<Todo[]>([]);
+  const [currentTime, setCurrentTime] = useState<Date>(new Date());
 
-  const onClikcLogout = () => {
-    sessionStorage.clear();
-    window.location.href = "/";
-  };
+  //hooks
 
   useEffect(() => {
     retrieveTodos();
@@ -65,14 +52,25 @@ function App() {
     setInterval(() => setCurrentTime(new Date()), 1000);
   }, []);
 
-  useEffect(
-    () => console.log("todos - after change to todos: ", todos),
-    [todos]
-  );
-
   useEffect(() => {
     filterHandle();
   }, [todos, status]);
+
+  //functions
+
+  const retrieveTodos = () => {
+    const token = sessionStorage.getItem("JWT");
+    const user_id = sessionStorage.getItem("user_id");
+    getTodos(user_id, token).then((res) => {
+      setFilteredTodos(res);
+      setTodos(res);
+    });
+  };
+
+  const onClikcLogout = () => {
+    sessionStorage.clear();
+    window.location.href = "/";
+  };
 
   return (
     <div>
@@ -81,15 +79,8 @@ function App() {
         Logout
       </button>
       <div className="App">
-        <Form
-          todos={todos}
-          setTodos={setTodos}
-          status={status}
-          setStatus={setStatus}
-          setFilteredTodos={setFilteredTodos}
-        />
+        <Form setTodos={setTodos} setFilteredTodos={setFilteredTodos} />
         <TodoList
-          setCurrentTime={setCurrentTime}
           currentTime={currentTime}
           filteredTodos={filteredTodos}
           setTodos={setTodos}

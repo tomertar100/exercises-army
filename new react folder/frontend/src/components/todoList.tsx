@@ -8,7 +8,6 @@ type TodoListProps = {
   todos: Todo[];
   setTodos: React.Dispatch<React.SetStateAction<Todo[]>>;
   filteredTodos: Todo[];
-  setCurrentTime: React.Dispatch<React.SetStateAction<Date>>;
   currentTime: Date;
   setFilteredTodos: React.Dispatch<React.SetStateAction<Todo[]>>;
   setStatus: React.Dispatch<React.SetStateAction<string>>;
@@ -18,21 +17,20 @@ const TodoList = ({
   todos,
   setTodos,
   filteredTodos,
-  setCurrentTime,
   currentTime,
   setFilteredTodos,
   setStatus,
 }: TodoListProps) => {
+  //state
+
+  const [currentTabClass, setCurrentTabClass] = useState<string>("all");
+
+  //hooks
+
   useEffect(
     () => console.log("ToDoList filteredTodos: ", filteredTodos),
     [filteredTodos]
   );
-
-  const [currentTabClass, setCurrentTabClass] = useState("all");
-
-  // useEffect(()=>{
-  //   const classNa
-  // },[])
 
   return (
     <div className="todo-container">

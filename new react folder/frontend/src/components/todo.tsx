@@ -41,17 +41,8 @@ const TodoItem = ({
 
   const [editText, setEditText] = useState<string>(todo.text);
   const [editDate, setEditDate] = useState<string>(todo.date);
-  // const [isOverDue, setIsOverDue] = useState<boolean>(false);
-  // const [isCompleted, setIsCompleted] = useState<boolean>();
 
-  //functions
-
-  const retrieveTodos = () => {
-    getTodos(user_id, token).then((res) => {
-      setFilteredTodos(res);
-      setTodos(res);
-    });
-  };
+  //hooks
 
   useEffect(() => {
     if (
@@ -62,22 +53,16 @@ const TodoItem = ({
     } else {
       todo.overdue = false;
     }
-  }, [currentTime, todos]);
+  }, [currentTime, todos, todo]);
 
-  // const filteredClass = () => {
-  //   let result;
+  // functions
 
-  //   if (isCompleted) {
-  //     result = "completedClass";
-  //   } else if (isOverDue && !isCompleted) {
-  //     result = "overdueClass";
-  //   } else if (!isOverDue && isCompleted) {
-  //     result = "completedClass";
-  //   } else {
-  //     result = "";
-  //   }
-  //   return result;
-  // };
+  const retrieveTodos = () => {
+    getTodos(user_id, token).then((res) => {
+      setFilteredTodos(res);
+      setTodos(res);
+    });
+  };
 
   const handleDelete = async () => {
     await deleteTodo(todo.task_id, token);
@@ -143,7 +128,7 @@ const TodoItem = ({
         ) : (
           <input
             defaultValue={todo.text}
-            maxLength={22}
+            maxLength={28}
             className="edit-text-input"
             type="text"
             placeholder="Upadte text here..."
@@ -164,7 +149,11 @@ const TodoItem = ({
         )}
 
         {!todo.isediting ? (
-          <button className="edit-button" onClick={toggleEdit}>
+          <button
+            className="edit-button"
+            onClick={toggleEdit}
+            disabled={todo.completed}
+          >
             <FiEdit />
           </button>
         ) : (

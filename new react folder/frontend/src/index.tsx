@@ -1,13 +1,6 @@
-import React from "react";
 import ReactDOM from "react-dom";
 import "./Login.css";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Link,
-  Navigate,
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 //pages
 import LoginPage from "../src/components/login";

@@ -1,6 +1,6 @@
 import { pool } from "./connections";
 
-export async function getUserSql(username) {
+export async function getUserSql(username: string) {
   const connected = await pool.connect();
 
   try {
@@ -17,7 +17,7 @@ export async function getUserSql(username) {
   }
 }
 
-export async function createUserSql(username, password) {
+export async function createUserSql(username: string, password: string) {
   const connected = await pool.connect();
 
   try {
@@ -26,7 +26,8 @@ export async function createUserSql(username, password) {
     );
   } catch (error) {
     console.log("error querying: " + error);
+    return;
   } finally {
-    await connected.release();
+    connected.release();
   }
 }

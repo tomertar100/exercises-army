@@ -1,24 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Todo } from "../App";
 import { createTodo, getTodos } from "../axios";
 
 //types
 
 type FormProps = {
-  todos: Todo[];
   setTodos: React.Dispatch<React.SetStateAction<Todo[]>>;
-  status: string;
-  setStatus: React.Dispatch<React.SetStateAction<string>>;
   setFilteredTodos: React.Dispatch<React.SetStateAction<Todo[]>>;
 };
 
-const Form = ({
-  todos,
-  setTodos,
-  status,
-  setStatus,
-  setFilteredTodos,
-}: FormProps) => {
+const Form = ({ setTodos, setFilteredTodos }: FormProps) => {
   const user_id = sessionStorage.getItem("user_id");
 
   const token = sessionStorage.getItem("JWT");
@@ -58,7 +49,6 @@ const Form = ({
     }
 
     await createTodo(
-      newTask.task_id,
       newTask.user_id,
       newTask.text,
       newTask.date,
@@ -76,7 +66,7 @@ const Form = ({
       <div className="labelInputText">
         <label htmlFor="inputText">TASK NAME:</label>
         <input
-          maxLength={22}
+          maxLength={28}
           id="inputText"
           placeholder="Type here..."
           type="text"

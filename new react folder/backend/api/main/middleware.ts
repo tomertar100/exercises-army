@@ -1,8 +1,13 @@
 import jwt from "jsonwebtoken";
+import { Request, Response, NextFunction } from "express";
 
 export const secretKey = "secret";
 
-export function authenticateToken(req, res, next) {
+export function authenticateToken(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
   const authHeader = req.headers["authorization"];
 
   if (typeof authHeader !== "undefined") {
@@ -12,9 +17,9 @@ export function authenticateToken(req, res, next) {
       if (err) {
         return res.sendStatus(403);
       }
-      res.locals.user = data.name;
+      res.locals.user = data?.name;
 
-      next();
+      return next();
     });
   } else {
     res.sendStatus(401);

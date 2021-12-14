@@ -1,6 +1,6 @@
 import { pool } from "./connections";
 
-export async function getAllTodosSql(user_id) {
+export async function getAllTodosSql(user_id: string | number | null) {
   const connected = await pool.connect();
 
   try {
@@ -17,12 +17,12 @@ export async function getAllTodosSql(user_id) {
 }
 
 export async function addTodoSql(
-  user_id,
-  text,
-  date,
-  completed,
-  overdue,
-  isEditing
+  user_id: string | number | null,
+  text: string,
+  date: string,
+  completed: boolean,
+  overdue: boolean,
+  isEditing: boolean
 ) {
   const connected = await pool.connect();
 
@@ -32,12 +32,13 @@ export async function addTodoSql(
     );
   } catch (error) {
     console.log("error querying: " + error);
+    return;
   } finally {
-    await connected.release();
+    return connected.release();
   }
 }
 
-export async function updateTodoSql(id, text, date) {
+export async function updateTodoSql(id: string, text: string, date: string) {
   const connected = await pool.connect();
 
   try {
@@ -52,7 +53,7 @@ export async function updateTodoSql(id, text, date) {
   }
 }
 
-export async function updateCompleteSql(id, completed) {
+export async function updateCompleteSql(id: string, completed: boolean) {
   const connected = await pool.connect();
 
   try {
@@ -67,7 +68,7 @@ export async function updateCompleteSql(id, completed) {
   }
 }
 
-export async function updateEditingTodoSql(id, isEditing) {
+export async function updateEditingTodoSql(id: string, isEditing: boolean) {
   const connected = await pool.connect();
 
   try {
@@ -82,7 +83,7 @@ export async function updateEditingTodoSql(id, isEditing) {
   }
 }
 
-export async function deleteTodoSql(id) {
+export async function deleteTodoSql(id: string) {
   const connected = await pool.connect();
 
   try {
@@ -91,6 +92,6 @@ export async function deleteTodoSql(id) {
     console.log("error querying: " + error);
     return;
   } finally {
-    await connected.release();
+    connected.release();
   }
 }

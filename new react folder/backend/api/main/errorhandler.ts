@@ -1,6 +1,6 @@
-import express from "express";
+import { ErrorRequestHandler } from "express";
 
-export const errorHandler: express.ErrorHandler = (err, req, res, next) => {
-  res.json(err.message);
-  console.error(err);
+export const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
+  res.json(err);
+  console.log(err);
 };

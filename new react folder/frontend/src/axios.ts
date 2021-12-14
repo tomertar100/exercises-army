@@ -1,21 +1,11 @@
 import axios from "axios";
 import { User } from "../src/components/login";
-import { Todo } from "../src/App";
 
-type LoginToServer = (username: string, password: string) => any;
-type registerToServer = (username: string, password: string) => any;
+type LoginToServer = (username: string, password: string) => Promise<any>;
+type RegisterToServer = (username: string, password: string) => Promise<any>;
 
 const sessionStorageObject = "JWT";
 const serverUrl = "http://localhost:3002/";
-
-const getConfig = () => {
-  return {
-    headers: {
-      authorization: `bearer ${sessionStorage.getItem(sessionStorageObject)}`,
-      "Content-Type": "application/json",
-    },
-  };
-};
 
 export const errorHandling = (error: any) => {
   if (error.response) {
@@ -51,13 +41,13 @@ export const loginToServer: LoginToServer = async (username, password) => {
       },
     })
     .then((res) => {
-      console.log(res);
+      // console.log(res);
       return res;
     })
     .catch(errorHandling);
 };
 
-export const registerToServer: registerToServer = async (
+export const registerToServer: RegisterToServer = async (
   username,
   password
 ) => {
@@ -73,7 +63,7 @@ export const registerToServer: registerToServer = async (
       },
     })
     .then((res) => {
-      console.log(res);
+      // console.log(res);
       return res;
     })
     .catch(errorHandling);
@@ -121,7 +111,6 @@ export const getTodos = async (
 //create todo
 
 export const createTodo = async (
-  task_id: string | null,
   user_id: number | string | null,
   text: string,
   date: string,
