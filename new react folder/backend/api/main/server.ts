@@ -12,9 +12,10 @@ app.use(express.json());
 app.use(cors());
 
 app.post("/login", async (req, res) => {
-  const username = req.body.username;
-  const password = req.body.password;
-  const loginUser = await getUser(username);
+  const { username, password } = req.body;
+  // const username = req.body.username;
+  // const password = req.body.password;
+  const loginUser = await getUser({ username });
   if (loginUser) {
     if (loginUser.password === password) {
       const accessToken = jwt.sign(username, secretKey);
@@ -29,19 +30,20 @@ app.post("/login", async (req, res) => {
 });
 
 app.post("/register", async (req, res) => {
-  const username = req.body.username;
-  const password = req.body.password;
+  const { username, password } = req.body;
+  // const username = req.body.username;
+  // const password = req.body.password;
 
   const isUser = await getUser(username);
   if (!isUser) {
-    await createUser(username, password);
+    await createUser({ username, password });
     res.status(201).json("user created, username: " + username);
   }
   res.status(401).json("user already exists");
 });
 
 app.use("/", authenticateToken);
-app.use("/todoapp", todosRouter);
+app.use("/todos", todosRouter);
 app.use(errorHandler);
 
 app.listen(port, () => {

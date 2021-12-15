@@ -14,8 +14,8 @@ function authenticateToken(req, res, next) {
             if (err) {
                 return res.sendStatus(403);
             }
-            res.locals.user = data.name;
-            next();
+            res.locals.user = data === null || data === void 0 ? void 0 : data.name;
+            return next();
         });
     }
     else {

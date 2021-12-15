@@ -1,40 +1,39 @@
-// {
-//   "compilerOptions": {
-//     "module": "esnext",
-//     "esModuleInterop": true,
-//     "target": "ES5",
-//     "moduleResolution": "node",
-//     "sourceMap": true,
-//     "outDir": "dist"
-//   },
-//   "lib": ["es2015"],
-
-// }
-
 {
   "compilerOptions": {
-    "outDir": "dist",
-
-    "sourceMap": true,
-    "noImplicitAny": true,
-    "allowSyntheticDefaultImports": true,
-    "allowJs": true,
-    "moduleResolution": "node",
-    "module": "esnext",
-    "lib": ["es6"],
-    "target": "ES5",
-    "jsx": "react-jsx",
-    "skipLibCheck": true,
+    "module": "commonjs",
     "esModuleInterop": true,
-    "strict": false,
-    "noUnusedLocals": false,
-    "noImplicitReturns": false,
-    "noUnusedParameters": false,
-    "forceConsistentCasingInFileNames": true,
-    "noFallthroughCasesInSwitch": false,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true
+    "target": "es6",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "outDir": "dist"
   },
-  "exclude": ["node_modules", "dist"]
+  "lib": ["es2015"]
 }
+
+// {
+//   "compilerOptions": {
+//     "outDir": "dist",
+
+//     "sourceMap": true,
+//     "noImplicitAny": true,
+//     "allowSyntheticDefaultImports": true,
+//     "allowJs": true,
+//     "moduleResolution": "node",
+//     "module": "esnext",
+//     "lib": ["es6"],
+//     "target": "ES5",
+//     "jsx": "react-jsx",
+//     "skipLibCheck": true,
+//     "esModuleInterop": true,
+//     "strict": false,
+//     "noUnusedLocals": false,
+//     "noImplicitReturns": false,
+//     "noUnusedParameters": false,
+//     "forceConsistentCasingInFileNames": true,
+//     "noFallthroughCasesInSwitch": false,
+//     "resolveJsonModule": true,
+//     "isolatedModules": true,
+//     "noEmit": true
+//   },
+//   "exclude": ["node_modules", "dist"]
+// }

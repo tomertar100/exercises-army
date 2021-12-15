@@ -2,8 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.errorHandler = void 0;
 const errorHandler = (err, req, res, next) => {
-    res.json(err.message);
-    console.error(err);
+    res.json(err);
+    console.log(err);
 };
 exports.errorHandler = errorHandler;
 //# sourceMappingURL=errorhandler.js.map

@@ -25,6 +25,13 @@ body {
   margin-left: 30px;
   font-size: 30px;
 }
+.username-title {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-right: 130px;
+  margin-top: 20px;
+}
 
 .logout-button {
   position: absolute;

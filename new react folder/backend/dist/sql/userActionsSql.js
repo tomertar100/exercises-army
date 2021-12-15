@@ -36,9 +36,10 @@ function createUserSql(username, password) {
         }
         catch (error) {
             console.log("error querying: " + error);
+            return;
         }
         finally {
-            yield connected.release();
+            connected.release();
         }
     });
 }

@@ -51,7 +51,7 @@ app.post("/register", (req, res) => __awaiter(void 0, void 0, void 0, function* 
     res.status(401).json("user already exists");
 }));
 app.use("/", middleware_1.authenticateToken);
-app.use("/todoapp", todosRoutes_1.default);
+app.use("/todos", todosRoutes_1.default);
 app.use(errorhandler_1.errorHandler);
 app.listen(port, () => {
     console.log("listening at port: " + port);

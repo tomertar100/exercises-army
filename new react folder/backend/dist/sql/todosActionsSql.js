@@ -36,9 +36,10 @@ function addTodoSql(user_id, text, date, completed, overdue, isEditing) {
         }
         catch (error) {
             console.log("error querying: " + error);
+            return;
         }
         finally {
-            yield connected.release();
+            return connected.release();
         }
     });
 }
@@ -102,7 +103,7 @@ function deleteTodoSql(id) {
             return;
         }
         finally {
-            yield connected.release();
+            connected.release();
         }
     });
 }
