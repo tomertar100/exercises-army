@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 //importing more components
 import TodoItem from "./todo";
-import { Todo } from "../App";
+import { Todo } from "../types/todo";
 
 //typescript
 type TodoListProps = {

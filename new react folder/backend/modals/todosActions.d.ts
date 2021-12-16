@@ -27,6 +27,6 @@ export type UpdateEditing = {
   isEditing: boolean;
 };
 
-export type deleteTodo = {
+export type DeleteTodo = {
   id: string;
 };

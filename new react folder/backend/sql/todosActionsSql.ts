@@ -1,6 +1,6 @@
 import { pool } from "./connections";
 
-export async function getAllTodosSql(user_id: string | number | null) {
+export async function getAllTodosSql({ user_id }) {
   const connected = await pool.connect();
 
   try {
@@ -16,14 +16,14 @@ export async function getAllTodosSql(user_id: string | number | null) {
   }
 }
 
-export async function addTodoSql(
-  user_id: string | number | null,
-  text: string,
-  date: string,
-  completed: boolean,
-  overdue: boolean,
-  isEditing: boolean
-) {
+export async function addTodoSql({
+  user_id,
+  text,
+  date,
+  completed,
+  overdue,
+  isEditing,
+}) {
   const connected = await pool.connect();
 
   try {
@@ -38,7 +38,7 @@ export async function addTodoSql(
   }
 }
 
-export async function updateTodoSql(id: string, text: string, date: string) {
+export async function updateTodoSql({ id, text, date }) {
   const connected = await pool.connect();
 
   try {
@@ -53,7 +53,7 @@ export async function updateTodoSql(id: string, text: string, date: string) {
   }
 }
 
-export async function updateCompleteSql(id: string, completed: boolean) {
+export async function updateCompleteSql({ id, completed }) {
   const connected = await pool.connect();
 
   try {
@@ -68,7 +68,7 @@ export async function updateCompleteSql(id: string, completed: boolean) {
   }
 }
 
-export async function updateEditingTodoSql(id: string, isEditing: boolean) {
+export async function updateEditingTodoSql({ id, isEditing }) {
   const connected = await pool.connect();
 
   try {
@@ -83,7 +83,7 @@ export async function updateEditingTodoSql(id: string, isEditing: boolean) {
   }
 }
 
-export async function deleteTodoSql(id: string) {
+export async function deleteTodoSql({ id }) {
   const connected = await pool.connect();
 
   try {

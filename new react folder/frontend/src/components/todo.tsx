@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Todo } from "../App";
+import { Todo } from "../types/todo";
 import {
   getTodos,
   deleteTodo,

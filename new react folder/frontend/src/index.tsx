@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 //pages
 import LoginPage from "../src/components/login";
 
-import App from "./App";
+import App from "../src/pages/App";
 
 ReactDOM.render(
   <Router>

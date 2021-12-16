@@ -11,7 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteTodoSql = exports.updateEditingTodoSql = exports.updateCompleteSql = exports.updateTodoSql = exports.addTodoSql = exports.getAllTodosSql = void 0;
 const connections_1 = require("./connections");
-function getAllTodosSql(user_id) {
+function getAllTodosSql({ user_id }) {
     return __awaiter(this, void 0, void 0, function* () {
         const connected = yield connections_1.pool.connect();
         try {
@@ -28,7 +28,7 @@ function getAllTodosSql(user_id) {
     });
 }
 exports.getAllTodosSql = getAllTodosSql;
-function addTodoSql(user_id, text, date, completed, overdue, isEditing) {
+function addTodoSql({ user_id, text, date, completed, overdue, isEditing, }) {
     return __awaiter(this, void 0, void 0, function* () {
         const connected = yield connections_1.pool.connect();
         try {
@@ -44,7 +44,7 @@ function addTodoSql(user_id, text, date, completed, overdue, isEditing) {
     });
 }
 exports.addTodoSql = addTodoSql;
-function updateTodoSql(id, text, date) {
+function updateTodoSql({ id, text, date }) {
     return __awaiter(this, void 0, void 0, function* () {
         const connected = yield connections_1.pool.connect();
         try {
@@ -60,7 +60,7 @@ function updateTodoSql(id, text, date) {
     });
 }
 exports.updateTodoSql = updateTodoSql;
-function updateCompleteSql(id, completed) {
+function updateCompleteSql({ id, completed }) {
     return __awaiter(this, void 0, void 0, function* () {
         const connected = yield connections_1.pool.connect();
         try {
@@ -76,7 +76,7 @@ function updateCompleteSql(id, completed) {
     });
 }
 exports.updateCompleteSql = updateCompleteSql;
-function updateEditingTodoSql(id, isEditing) {
+function updateEditingTodoSql({ id, isEditing }) {
     return __awaiter(this, void 0, void 0, function* () {
         const connected = yield connections_1.pool.connect();
         try {
@@ -92,7 +92,7 @@ function updateEditingTodoSql(id, isEditing) {
     });
 }
 exports.updateEditingTodoSql = updateEditingTodoSql;
-function deleteTodoSql(id) {
+function deleteTodoSql({ id }) {
     return __awaiter(this, void 0, void 0, function* () {
         const connected = yield connections_1.pool.connect();
         try {

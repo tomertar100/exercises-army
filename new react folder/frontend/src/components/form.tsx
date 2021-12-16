@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Todo } from "../App";
+import { Todo } from "../types/todo";
 import { createTodo, getTodos } from "../axios";
 
 //types

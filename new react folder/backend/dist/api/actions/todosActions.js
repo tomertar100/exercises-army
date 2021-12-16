@@ -11,39 +11,46 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteTodo = exports.updateEditingTodo = exports.updateComplete = exports.updateTodo = exports.addTodo = exports.getAllTodos = void 0;
 const todosActionsSql_1 = require("../../sql/todosActionsSql");
-function getAllTodos(user_id) {
+function getAllTodos({ user_id }) {
     return __awaiter(this, void 0, void 0, function* () {
-        return yield (0, todosActionsSql_1.getAllTodosSql)(user_id);
+        return yield (0, todosActionsSql_1.getAllTodosSql)({ user_id });
     });
 }
 exports.getAllTodos = getAllTodos;
-function addTodo(user_id, text, date, completed, overdue, isEditing) {
+function addTodo({ user_id, text, date, completed, overdue, isEditing, }) {
     return __awaiter(this, void 0, void 0, function* () {
-        return yield (0, todosActionsSql_1.addTodoSql)(user_id, text, date, completed, overdue, isEditing);
+        return yield (0, todosActionsSql_1.addTodoSql)({
+            user_id,
+            text,
+            date,
+            completed,
+            overdue,
+            isEditing,
+        });
     });
 }
 exports.addTodo = addTodo;
-function updateTodo(id, text, date) {
+function updateTodo({ id, text, date }) {
     return __awaiter(this, void 0, void 0, function* () {
-        return yield (0, todosActionsSql_1.updateTodoSql)(id, text, date);
+        return yield (0, todosActionsSql_1.updateTodoSql)({ id, text, date });
     });
 }
 exports.updateTodo = updateTodo;
-function updateComplete(id, completed) {
+function updateComplete({ id, completed }) {
     return __awaiter(this, void 0, void 0, function* () {
-        return yield (0, todosActionsSql_1.updateCompleteSql)(id, completed);
+        return yield (0, todosActionsSql_1.updateCompleteSql)({ id, completed });
     });
 }
 exports.updateComplete = updateComplete;
-function updateEditingTodo(id, isEditing) {
+function updateEditingTodo({ id, isEditing }) {
     return __awaiter(this, void 0, void 0, function* () {
-        return yield (0, todosActionsSql_1.updateEditingTodoSql)(id, isEditing);
+        return yield (0, todosActionsSql_1.updateEditingTodoSql)({ id, isEditing });
     });
 }
 exports.updateEditingTodo = updateEditingTodo;
-function deleteTodo(id) {
+function deleteTodo({ id }) {
     return __awaiter(this, void 0, void 0, function* () {
-        return yield (0, todosActionsSql_1.deleteTodoSql)(id);
+        return yield (0, todosActionsSql_1.deleteTodoSql)({ id });
     });
 }
 exports.deleteTodo = deleteTodo;

@@ -24,9 +24,10 @@ const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use((0, cors_1.default)());
 app.post("/login", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const username = req.body.username;
-    const password = req.body.password;
-    const loginUser = yield (0, userActions_1.getUser)(username);
+    const { username, password } = req.body;
+    // const username = req.body.username;
+    // const password = req.body.password;
+    const loginUser = yield (0, userActions_1.getUser)({ username });
     if (loginUser) {
         if (loginUser.password === password) {
             const accessToken = jsonwebtoken_1.default.sign(username, middleware_1.secretKey);
@@ -41,11 +42,12 @@ app.post("/login", (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
 }));
 app.post("/register", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const username = req.body.username;
-    const password = req.body.password;
+    const { username, password } = req.body;
+    // const username = req.body.username;
+    // const password = req.body.password;
     const isUser = yield (0, userActions_1.getUser)(username);
     if (!isUser) {
-        yield (0, userActions_1.createUser)(username, password);
+        yield (0, userActions_1.createUser)({ username, password });
         res.status(201).json("user created, username: " + username);
     }
     res.status(401).json("user already exists");
