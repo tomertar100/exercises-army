@@ -109,15 +109,5 @@ todosRouter.all("/", (req, res) => {
 todosRouter.all("/", (req, res) => {
     res.status(404).json({ route_err: "invalid Route" });
 });
-// todosRouter.all("/:id", (req, res) => {
-//   res.status(405).json({
-//     err_method: "invalid method used",
-//   });
-// });
-// todosRouter.all("/:id", (req, res) => {
-//   res.status(405).json({
-//     err_method: "invalid method used",
-//   });
-// });
 exports.default = todosRouter;
 //# sourceMappingURL=todosRoutes.js.map

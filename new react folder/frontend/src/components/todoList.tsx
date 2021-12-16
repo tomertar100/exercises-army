@@ -20,14 +20,14 @@ type TodoListProps = {
   setStatus: React.Dispatch<React.SetStateAction<string>>;
 };
 
-const TodoList = ({
+const TodoList: React.FC<TodoListProps> = ({
   todos,
   setTodos,
   filteredTodos,
   currentTime,
   setFilteredTodos,
   setStatus,
-}: TodoListProps) => {
+}) => {
   const user_id = sessionStorage.getItem("user_id");
   const token = sessionStorage.getItem("JWT");
 
@@ -60,20 +60,17 @@ const TodoList = ({
   };
 
   const toggleEdit = async (task_id: string | null, isEditing: boolean) => {
-    const newEditingState = isEditing;
+    const newEditingState = !isEditing;
     await updateEditingField(task_id, newEditingState, token);
     await retrieveTodos();
   };
 
   const handleEdit = async (
     task_id: string | null,
-    text: string,
-    date: string,
+
     isEditing: boolean,
     editText: string,
-    editDate: string,
-    setEditText: React.Dispatch<React.SetStateAction<string>>,
-    setEditDate: React.Dispatch<React.SetStateAction<string>>
+    editDate: string
   ) => {
     if (!editText || /^\s*$/.test(editText)) {
       return;
@@ -85,9 +82,6 @@ const TodoList = ({
     await updateTodo(task_id, editText, editDate, token);
     toggleEdit(task_id, isEditing);
     await retrieveTodos();
-
-    setEditText(text);
-    setEditDate(date);
   };
 
   return (

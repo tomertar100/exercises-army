@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Todo } from "../types/todo";
 
 import classnames from "classnames";
@@ -18,17 +18,13 @@ type todoItemProps = {
   toggleEdit: (task_id: string | null, isEditing: boolean) => Promise<void>;
   handleEdit: (
     task_id: string | null,
-    text: string,
-    date: string,
     isEditing: boolean,
     editText: string,
-    editDate: string,
-    setEditText: React.Dispatch<React.SetStateAction<string>>,
-    setEditDate: React.Dispatch<React.SetStateAction<string>>
+    editDate: string
   ) => Promise<void>;
 };
 
-const TodoItem = ({
+const TodoItem: React.FC<todoItemProps> = ({
   text,
   date,
   todos,
@@ -38,7 +34,7 @@ const TodoItem = ({
   toggleComplete,
   toggleEdit,
   handleEdit,
-}: todoItemProps) => {
+}) => {
   //global variables
 
   //hooks
@@ -55,6 +51,11 @@ const TodoItem = ({
   }, [currentTime, todos, todo]);
 
   // functions
+
+  useEffect(() => {
+    setEditText(todo.text);
+    setEditDate(todo.date);
+  }, [todo]);
 
   const [editText, setEditText] = useState<string>(todo.text);
   const [editDate, setEditDate] = useState<string>(todo.date);
@@ -125,13 +126,10 @@ const TodoItem = ({
             onClick={() =>
               handleEdit(
                 todo.task_id,
-                todo.text,
-                todo.date,
+
                 todo.isediting,
                 editText,
-                editDate,
-                setEditText,
-                setEditDate
+                editDate
               )
             }
           >

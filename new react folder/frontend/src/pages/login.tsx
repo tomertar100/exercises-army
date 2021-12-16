@@ -5,7 +5,7 @@ import {
   registerToServer,
 } from "../axios";
 
-const LoginPage = () => {
+const LoginPage: React.FC = () => {
   const [isItLogin, setIsitLogin] = useState<boolean>(true);
 
   const [username, setUsername] = useState<string>("");

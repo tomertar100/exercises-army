@@ -9,7 +9,7 @@ type FormProps = {
   setFilteredTodos: React.Dispatch<React.SetStateAction<Todo[]>>;
 };
 
-const Form = ({ setTodos, setFilteredTodos }: FormProps) => {
+const Form: React.FC<FormProps> = ({ setTodos, setFilteredTodos }) => {
   const user_id = sessionStorage.getItem("user_id");
 
   const token = sessionStorage.getItem("JWT");
@@ -100,7 +100,7 @@ const Form = ({ setTodos, setFilteredTodos }: FormProps) => {
       </div>
       <div className="todo-button-div">
         <button
-          onClick={handleSubmitTodo}
+          onClick={() => handleSubmitTodo}
           type="submit"
           className="todo-button"
         >
