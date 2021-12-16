@@ -2,6 +2,13 @@ import React, { useState, useEffect } from "react";
 //importing more components
 import TodoItem from "./todo";
 import { Todo } from "../types/todo";
+import {
+  getTodos,
+  deleteTodo,
+  updateCompleteField,
+  updateEditingField,
+  updateTodo,
+} from "../axios";
 
 //typescript
 type TodoListProps = {
@@ -21,7 +28,10 @@ const TodoList = ({
   setFilteredTodos,
   setStatus,
 }: TodoListProps) => {
-  //state
+  const user_id = sessionStorage.getItem("user_id");
+  const token = sessionStorage.getItem("JWT");
+
+  //states
 
   const [currentTabClass, setCurrentTabClass] = useState<string>("all");
 
@@ -31,6 +41,54 @@ const TodoList = ({
     () => console.log("ToDoList filteredTodos: ", filteredTodos),
     [filteredTodos]
   );
+
+  const retrieveTodos = () => {
+    getTodos(user_id, token).then((res) => {
+      setFilteredTodos(res);
+      setTodos(res);
+    });
+  };
+
+  const handleDelete = async (task_id: string | null) => {
+    await deleteTodo(task_id, token);
+    await retrieveTodos();
+  };
+  const toggleComplete = async (task_id: string | null, completed: boolean) => {
+    const newCompleted = !completed;
+    await updateCompleteField(task_id, newCompleted, token);
+    await retrieveTodos();
+  };
+
+  const toggleEdit = async (task_id: string | null, isEditing: boolean) => {
+    const newEditingState = isEditing;
+    await updateEditingField(task_id, newEditingState, token);
+    await retrieveTodos();
+  };
+
+  const handleEdit = async (
+    task_id: string | null,
+    text: string,
+    date: string,
+    isEditing: boolean,
+    editText: string,
+    editDate: string,
+    setEditText: React.Dispatch<React.SetStateAction<string>>,
+    setEditDate: React.Dispatch<React.SetStateAction<string>>
+  ) => {
+    if (!editText || /^\s*$/.test(editText)) {
+      return;
+    }
+
+    if (editDate === null || editDate === "") {
+      return;
+    }
+    await updateTodo(task_id, editText, editDate, token);
+    toggleEdit(task_id, isEditing);
+    await retrieveTodos();
+
+    setEditText(text);
+    setEditDate(date);
+  };
 
   return (
     <div className="todo-container">
@@ -83,9 +141,11 @@ const TodoList = ({
             text={todo.text}
             date={todo.date}
             todos={todos}
-            setTodos={setTodos}
             todo={todo}
-            setFilteredTodos={setFilteredTodos}
+            handleDelete={handleDelete}
+            toggleComplete={toggleComplete}
+            toggleEdit={toggleEdit}
+            handleEdit={handleEdit}
           />
         ))}
       </ul>

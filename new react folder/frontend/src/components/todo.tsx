@@ -1,12 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Todo } from "../types/todo";
-import {
-  getTodos,
-  deleteTodo,
-  updateCompleteField,
-  updateEditingField,
-  updateTodo,
-} from "../axios";
+
 import classnames from "classnames";
 import { MdDelete, MdCancel } from "react-icons/md";
 import { FiEdit } from "react-icons/fi";
@@ -17,30 +11,35 @@ type todoItemProps = {
   text: string;
   date: string;
   todos: Todo[];
-  setTodos: React.Dispatch<React.SetStateAction<Todo[]>>;
   todo: Todo;
   currentTime: Date;
-  setFilteredTodos: React.Dispatch<React.SetStateAction<Todo[]>>;
+  handleDelete: (task_id: string | null) => Promise<void>;
+  toggleComplete: (task_id: string | null, completed: boolean) => Promise<void>;
+  toggleEdit: (task_id: string | null, isEditing: boolean) => Promise<void>;
+  handleEdit: (
+    task_id: string | null,
+    text: string,
+    date: string,
+    isEditing: boolean,
+    editText: string,
+    editDate: string,
+    setEditText: React.Dispatch<React.SetStateAction<string>>,
+    setEditDate: React.Dispatch<React.SetStateAction<string>>
+  ) => Promise<void>;
 };
 
 const TodoItem = ({
   text,
   date,
   todos,
-  setTodos,
   todo,
   currentTime,
-  setFilteredTodos,
+  handleDelete,
+  toggleComplete,
+  toggleEdit,
+  handleEdit,
 }: todoItemProps) => {
   //global variables
-
-  const user_id = sessionStorage.getItem("user_id");
-  const token = sessionStorage.getItem("JWT");
-
-  //states
-
-  const [editText, setEditText] = useState<string>(todo.text);
-  const [editDate, setEditDate] = useState<string>(todo.date);
 
   //hooks
 
@@ -57,44 +56,8 @@ const TodoItem = ({
 
   // functions
 
-  const retrieveTodos = () => {
-    getTodos(user_id, token).then((res) => {
-      setFilteredTodos(res);
-      setTodos(res);
-    });
-  };
-
-  const handleDelete = async () => {
-    await deleteTodo(todo.task_id, token);
-    await retrieveTodos();
-  };
-  const toggleComplete = async () => {
-    const newCompleted = !todo.completed;
-    await updateCompleteField(todo.task_id, newCompleted, token);
-    await retrieveTodos();
-  };
-
-  const toggleEdit = async () => {
-    const newEditingState = !todo.isediting;
-    await updateEditingField(todo.task_id, newEditingState, token);
-    await retrieveTodos();
-  };
-
-  const handleEdit = async () => {
-    if (!editText || /^\s*$/.test(editText)) {
-      return;
-    }
-
-    if (editDate === null || editDate === "") {
-      return;
-    }
-    await updateTodo(todo.task_id, editText, editDate, token);
-    toggleEdit();
-    await retrieveTodos();
-
-    setEditText(todo.text);
-    setEditDate(todo.date);
-  };
+  const [editText, setEditText] = useState<string>(todo.text);
+  const [editDate, setEditDate] = useState<string>(todo.date);
 
   const todoClasses = classnames({
     "todo-item": true,
@@ -109,7 +72,7 @@ const TodoItem = ({
           <input
             checked={todo.completed}
             type="checkbox"
-            onClick={toggleComplete}
+            onClick={() => toggleComplete(todo.task_id, todo.completed)}
             className="complete-button"
           />
         ) : (
@@ -151,23 +114,43 @@ const TodoItem = ({
         {!todo.isediting ? (
           <button
             className="edit-button"
-            onClick={toggleEdit}
+            onClick={() => toggleEdit(todo.task_id, todo.isediting)}
             disabled={todo.completed}
           >
             <FiEdit />
           </button>
         ) : (
-          <button className="update-button" onClick={handleEdit}>
+          <button
+            className="update-button"
+            onClick={() =>
+              handleEdit(
+                todo.task_id,
+                todo.text,
+                todo.date,
+                todo.isediting,
+                editText,
+                editDate,
+                setEditText,
+                setEditDate
+              )
+            }
+          >
             <AiOutlineCheckCircle />
           </button>
         )}
 
         {!todo.isediting ? (
-          <button onClick={handleDelete} className="delete-button">
+          <button
+            onClick={() => handleDelete(todo.task_id)}
+            className="delete-button"
+          >
             <MdDelete />
           </button>
         ) : (
-          <button onClick={toggleEdit} className="cancel-button">
+          <button
+            onClick={() => toggleEdit(todo.task_id, todo.isediting)}
+            className="cancel-button"
+          >
             <MdCancel />
           </button>
         )}

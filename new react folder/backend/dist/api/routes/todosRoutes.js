@@ -64,7 +64,7 @@ todosRouter.patch("/:id/update", (req, res) => __awaiter(void 0, void 0, void 0,
     if (!text || !date) {
         res.status(400).json({ err: "missing text or date" });
     }
-    res.status(204).json({ msg: "todo updated" });
+    res.status(200).json({ msg: "todo updated" });
 }));
 todosRouter.patch("/:id/complete", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const id = req.params.id;
@@ -90,7 +90,7 @@ todosRouter.patch("/:id/editing", (req, res) => __awaiter(void 0, void 0, void 0
     if (!isEditing) {
         res.status(400).json({ err: "missing completed field" });
     }
-    res.status(204).json({ msg: "updated isEditing field" });
+    res.status(200).json({ msg: "updated isEditing field" });
 }));
 todosRouter.delete("/:id/delete", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const id = req.params.id;
@@ -99,7 +99,7 @@ todosRouter.delete("/:id/delete", (req, res) => __awaiter(void 0, void 0, void 0
     if (!id) {
         res.status(400).json({ err: "missing task_id" });
     }
-    res.status(200).json("todo deleted");
+    res.status(200).json({ msg: "todo deleted" });
 }));
 todosRouter.all("/", (req, res) => {
     res.status(405).json({

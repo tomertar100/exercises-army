@@ -85,7 +85,7 @@ todosRouter.patch("/:id/update", async (req, res) => {
     res.status(400).json({ err: "missing text or date" });
   }
 
-  res.status(204).json({ msg: "todo updated" });
+  res.status(200).json({ msg: "todo updated" });
 });
 
 todosRouter.patch("/:id/complete", async (req, res) => {
@@ -115,7 +115,7 @@ todosRouter.patch("/:id/editing", async (req, res) => {
   if (!isEditing) {
     res.status(400).json({ err: "missing completed field" });
   }
-  res.status(204).json({ msg: "updated isEditing field" });
+  res.status(200).json({ msg: "updated isEditing field" });
 });
 
 todosRouter.delete("/:id/delete", async (req, res) => {
@@ -127,7 +127,7 @@ todosRouter.delete("/:id/delete", async (req, res) => {
   if (!id) {
     res.status(400).json({ err: "missing task_id" });
   }
-  res.status(200).json("todo deleted");
+  res.status(200).json({ msg: "todo deleted" });
 });
 
 todosRouter.all("/", (req, res) => {
@@ -140,15 +140,4 @@ todosRouter.all("/", (req, res) => {
   res.status(404).json({ route_err: "invalid Route" });
 });
 
-// todosRouter.all("/:id", (req, res) => {
-//   res.status(405).json({
-//     err_method: "invalid method used",
-//   });
-// });
-
-// todosRouter.all("/:id", (req, res) => {
-//   res.status(405).json({
-//     err_method: "invalid method used",
-//   });
-// });
 export default todosRouter;
