@@ -1,5 +1,5 @@
 import axios from "axios";
-import { User } from "../src/components/login";
+import { User } from "../src/types/user";
 
 type LoginToServer = (username: string, password: string) => Promise<any>;
 type RegisterToServer = (username: string, password: string) => Promise<any>;
@@ -75,19 +75,19 @@ axios.defaults.baseURL = serverUrl;
 
 //get all the todos from server
 
-export const getEverything = async (token: string | null) => {
-  return await axios
-    .get(serverUrl + "/todoapp/alltodos", {
-      headers: {
-        authorization: `bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-    })
-    .then((res) => {
-      return res.data;
-    })
-    .catch(errorHandling);
-};
+// export const getEverything = async (token: string | null) => {
+//   return await axios
+//     .get(serverUrl + "/todos/alltodos", {
+//       headers: {
+//         authorization: `bearer ${token}`,
+//         "Content-Type": "application/json",
+//       },
+//     })
+//     .then((res) => {
+//       return res.data;
+//     })
+//     .catch(errorHandling);
+// };
 
 //get todos from server based on user_id
 
@@ -96,7 +96,7 @@ export const getTodos = async (
   token: string | null
 ) => {
   return await axios
-    .get(serverUrl + `todoapp/todos/${user_id}`, {
+    .get(serverUrl + `todos/${user_id}`, {
       headers: {
         authorization: `bearer ${token}`,
         "Content-Type": "application/json",
@@ -129,7 +129,7 @@ export const createTodo = async (
   });
 
   return await axios
-    .post(serverUrl + "todoapp/createtodo", data, {
+    .post(serverUrl + "todos/", data, {
       headers: {
         authorization: `bearer ${token}`,
         "Content-Type": "application/json",
@@ -143,7 +143,7 @@ export const createTodo = async (
 
 export const deleteTodo = async (id: string | null, token: string | null) => {
   return await axios
-    .delete(serverUrl + `todoapp/deletetodo/${id}`, {
+    .delete(serverUrl + `todos/${id}/delete`, {
       headers: {
         authorization: `bearer ${token}`,
         "Content-Type": "application/json",
@@ -167,7 +167,7 @@ export const updateTodo = async (
   });
 
   return await axios
-    .patch(serverUrl + `todoapp/updatetodo/${id}`, data, {
+    .patch(serverUrl + `todos/${id}/update`, data, {
       headers: {
         authorization: `bearer ${token}`,
         "Content-Type": "application/json",
@@ -187,7 +187,7 @@ export const updateCompleteField = async (
   });
 
   return await axios
-    .patch(serverUrl + `todoapp/updatecomplete/${id}`, data, {
+    .patch(serverUrl + `todos/${id}/complete`, data, {
       headers: {
         authorization: `bearer ${token}`,
         "Content-Type": "application/json",
@@ -207,7 +207,7 @@ export const updateEditingField = async (
   });
 
   return await axios
-    .patch(serverUrl + `todoapp/updateediting/${id}`, data, {
+    .patch(serverUrl + `todos/${id}/editing`, data, {
       headers: {
         authorization: `bearer ${token}`,
         "Content-Type": "application/json",
