@@ -22,24 +22,24 @@ app.post("/login", async (req, res) => {
 
       res.json({ accessToken: accessToken, user_id: loginUser.user_id });
     } else {
-      res.status(401).json("password not matching");
+      res.status(400).json("password not matching");
     }
   } else {
-    res.status(401).json("user not found");
+    res.status(404).json("user not found");
   }
 });
 
 app.post("/register", async (req, res) => {
   const { username, password } = req.body;
-  // const username = req.body.username;
-  // const password = req.body.password;
 
   const isUser = await getUser(username);
-  if (!isUser) {
+
+  if (isUser === undefined) {
+    res.status(409).json("user already exists");
+  } else {
     await createUser({ username, password });
     res.status(201).json("user created, username: " + username);
   }
-  res.status(401).json("user already exists");
 });
 
 app.use("/", authenticateToken);

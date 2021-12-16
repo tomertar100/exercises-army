@@ -13,13 +13,13 @@ exports.createUser = exports.getUser = void 0;
 const userActionsSql_1 = require("../../sql/userActionsSql");
 function getUser({ username }) {
     return __awaiter(this, void 0, void 0, function* () {
-        return yield (0, userActionsSql_1.getUserSql)(username);
+        return yield (0, userActionsSql_1.getUserSql)({ username });
     });
 }
 exports.getUser = getUser;
 function createUser({ username, password }) {
     return __awaiter(this, void 0, void 0, function* () {
-        return yield (0, userActionsSql_1.createUserSql)(username, password);
+        return yield (0, userActionsSql_1.createUserSql)({ username, password });
     });
 }
 exports.createUser = createUser;

@@ -100,7 +100,7 @@ const Form: React.FC<FormProps> = ({ setTodos, setFilteredTodos }) => {
       </div>
       <div className="todo-button-div">
         <button
-          onClick={() => handleSubmitTodo}
+          onClick={(e: any) => handleSubmitTodo(e)}
           type="submit"
           className="todo-button"
         >

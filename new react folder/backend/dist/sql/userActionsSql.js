@@ -11,7 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createUserSql = exports.getUserSql = void 0;
 const connections_1 = require("./connections");
-function getUserSql(username) {
+function getUserSql({ username }) {
     return __awaiter(this, void 0, void 0, function* () {
         const connected = yield connections_1.pool.connect();
         try {
@@ -28,7 +28,7 @@ function getUserSql(username) {
     });
 }
 exports.getUserSql = getUserSql;
-function createUserSql(username, password) {
+function createUserSql({ username, password }) {
     return __awaiter(this, void 0, void 0, function* () {
         const connected = yield connections_1.pool.connect();
         try {

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   setSessionStorageToken,
   loginToServer,
@@ -10,6 +10,11 @@ const LoginPage: React.FC = () => {
 
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+
+  useEffect(() => {
+    setUsername("");
+    setPassword("");
+  }, [isItLogin]);
 
   const onLoginClick = async () => {
     if (username === "" || password === "") {
@@ -41,8 +46,7 @@ const LoginPage: React.FC = () => {
 
     if (res.status === 201) {
       alert("user Registered");
-      setUsername("");
-      setPassword("");
+
       setIsitLogin(true);
     } else {
       alert(res.data);

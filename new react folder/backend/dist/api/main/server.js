@@ -34,23 +34,26 @@ app.post("/login", (req, res) => __awaiter(void 0, void 0, void 0, function* () 
             res.json({ accessToken: accessToken, user_id: loginUser.user_id });
         }
         else {
-            res.status(401).json("password not matching");
+            res.status(400).json("password not matching");
         }
     }
     else {
-        res.status(401).json("user not found");
+        res.status(404).json("user not found");
     }
 }));
 app.post("/register", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { username, password } = req.body;
-    // const username = req.body.username;
-    // const password = req.body.password;
     const isUser = yield (0, userActions_1.getUser)(username);
-    if (!isUser) {
+    console.log(username);
+    console.log(password);
+    console.log(isUser);
+    if (isUser === undefined) {
+        res.status(409).json("user already exists");
+    }
+    else {
         yield (0, userActions_1.createUser)({ username, password });
         res.status(201).json("user created, username: " + username);
     }
-    res.status(401).json("user already exists");
 }));
 app.use("/", middleware_1.authenticateToken);
 app.use("/todos", todosRoutes_1.default);
