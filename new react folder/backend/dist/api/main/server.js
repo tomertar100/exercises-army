@@ -44,9 +44,6 @@ app.post("/login", (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 app.post("/register", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { username, password } = req.body;
     const isUser = yield (0, userActions_1.getUser)(username);
-    console.log(username);
-    console.log(password);
-    console.log(isUser);
     if (isUser === undefined) {
         res.status(409).json("user already exists");
     }
@@ -57,6 +54,7 @@ app.post("/register", (req, res) => __awaiter(void 0, void 0, void 0, function* 
 }));
 app.use("/", middleware_1.authenticateToken);
 app.use("/todos", todosRoutes_1.default);
+app.all("*", (req, res) => res.status(404).json({ err: "invalid route" }));
 app.use(errorhandler_1.errorHandler);
 app.listen(port, () => {
     console.log("listening at port: " + port);

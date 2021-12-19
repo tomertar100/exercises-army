@@ -13,7 +13,7 @@ import {
   UpdateComplete,
   UpdateEditing,
   DeleteTodo,
-} from "../../modals/todosActions";
+} from "../../models/todosActions";
 
 export async function getAllTodos({ user_id }: GetAllTodos) {
   return await getAllTodosSql({ user_id });

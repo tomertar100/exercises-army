@@ -44,6 +44,9 @@ app.post("/register", async (req, res) => {
 
 app.use("/", authenticateToken);
 app.use("/todos", todosRouter);
+
+app.all("*", (req, res) => res.status(404).json({ err: "invalid route" }));
+
 app.use(errorHandler);
 
 app.listen(port, () => {

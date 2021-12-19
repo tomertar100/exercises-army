@@ -173,7 +173,7 @@ export const updateTodo = async (
         "Content-Type": "application/json",
       },
     })
-    .then((res) => console.log(res))
+    .then((res) => console.log(res.data))
     .catch(errorHandling);
 };
 
@@ -213,7 +213,7 @@ export const updateEditingField = async (
         "Content-Type": "application/json",
       },
     })
-    .then((res) => console.log(res))
+    .then((res) => console.log(res.data))
     .catch(errorHandling);
 };
 

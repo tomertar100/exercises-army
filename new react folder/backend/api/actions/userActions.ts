@@ -1,5 +1,5 @@
 import { getUserSql, createUserSql } from "../../sql/userActionsSql";
-import { GetUser, CreateUser } from "../../modals/userActions";
+import { GetUser, CreateUser } from "../../models/userActions";
 export async function getUser({ username }: GetUser) {
   return await getUserSql({ username });
 }

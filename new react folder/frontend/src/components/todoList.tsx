@@ -51,6 +51,7 @@ const TodoList: React.FC<TodoListProps> = ({
 
   const handleDelete = async (task_id: string | null) => {
     await deleteTodo(task_id, token);
+
     await retrieveTodos();
   };
   const toggleComplete = async (task_id: string | null, completed: boolean) => {
